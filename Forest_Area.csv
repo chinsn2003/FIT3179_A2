@@ -1,4 +1,4 @@
-CountryID,Country and Area,Forest Area_1990,"Forest Area, 2000","Forest Area, 2010","Forest Area, 2015","Forest Area, 2020","Total Land Area, 2020","Forest Area as a Proportion of Total Land Area, 2020","Deforestation, 2015-2020","Total Forest Area Affected by Fire, 2015"
+CountryID,Country and Area,"Forest Area, 1990","Forest Area, 2000","Forest Area, 2010","Forest Area, 2015","Forest Area, 2020","Total Land Area, 2020","Forest Area as a Proportion of Total Land Area, 2020","Deforestation, 2015-2020","Total Forest Area Affected by Fire, 2015"
 ,WORLD,4236433.42,4158049.52,4106316.94,,4058930.81,13003000,31.13,10200,98040
 4,Afghanistan,1208.44,1208.44,1208.44,1208.44,1208.44,65286,1.85,...,...
 8,Albania,788.8,769.3,782.07,789.19,788.9,2740,28.79,...,...
@@ -236,3 +236,4 @@ CountryID,Country and Area,Forest Area_1990,"Forest Area, 2000","Forest Area, 20
 887,Yemen,549,549,549,549,549,52797,1.04,...,...
 894,Zambia,47412,47054,46696,45755.1,44814.03,74339,60.28,189.71,15077
 716,Zimbabwe,18826.68,18365.98,17905.28,17674.93,17444.58,38685,45.09,46.07,2830
+
