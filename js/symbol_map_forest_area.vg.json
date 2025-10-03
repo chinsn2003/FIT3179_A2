@@ -21,12 +21,12 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/Forest_Area_P_Data_Extract_From_World_Development_Indicators.csv"
+        "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/Forest_Area_P_Data_Extract_From_World_Development_Indicators.csv"
       },
       "transform": [
         {"calculate": "toNumber(datum.Longitude)", "as": "lon"},
         {"calculate": "toNumber(datum.Latitude)",  "as": "lat"},
-        {"calculate": "toNumber(replace(datum['2010 [YR2010]'], ',', ''))", "as": "y2010"},
+        {"calculate": "toNumber(replace(datum['2010'], ',', ''))", "as": "y2010"},
         {"filter": "isFinite(datum.lon) && isFinite(datum.lat)"},
         {"filter": "isFinite(datum.y2010)"}
       ],
