@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>% of Forest Area Lost, 2010–2020</title>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.8"></script>
+  <style>
+    body { margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+    #vis { max-width: 1000px; margin: 24px auto; }
+  </style>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    vegaEmbed("#vis", "js/choropleth_map.vg.json", {mode: "vega-lite"})
+      .then(console.log)
+      .catch(console.warn);
+  </script>
+</body>
+</html>
