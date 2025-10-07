@@ -46,7 +46,7 @@ Forest area (sq. km),AG.LND.FRST.K2,Comoros,-11.875001,43.872219,COM,373,368.62,
 Forest area (sq. km),AG.LND.FRST.K2,Dem. Rep. Congo,-4.038333,21.758664,COD,1371690,1360676.24,1349662.48,1338648.72,1327634.96,1316621.2,1305607.4,1294593.7,1283579.9,1272566.1,1261552.4,1250538.633,1239524.911,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Congo,-0.228021,15.827659,COG,220750,220630,220510,220390,220270,220150,220030,219910,219760,219610,219460,219310,219160,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Costa Rica,9.748917,-83.753428,CRI,28712,28875.66,29039.32,29202.98,29366.64,29530.3,29694,29857.7,30021.3,30185,30348.7,30512.4,30676.1,..,..
-Forest area (sq. km),AG.LND.FRST.K2,Côte d'Ivoire,,,CIV,39655.8,38526.94,37398.08,36269.22,35140.36,34011.5,32882.6,31753.7,30624.8,29496,28367.1,27238.267,26109.389,..,..
+Forest area (sq. km),AG.LND.FRST.K2,CÃ´te d'Ivoire,,,CIV,39655.8,38526.94,37398.08,36269.22,35140.36,34011.5,32882.6,31753.7,30624.8,29496,28367.1,27238.267,26109.389,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Croatia,45.1,15.2,HRV,19200,19204,19208,19212,19216,19220,19241.202,19316.084,19341.1,19366.1,19391.1,19416.1,19441.1,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Cuba,21.521757,-77.781167,CUB,29320,29824,30328,30832,31336,31840,32410,32420,32420,32420,32420,32420,32420,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Curacao,,,CUW,..,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,..,..
@@ -188,7 +188,7 @@ Forest area (sq. km),AG.LND.FRST.K2,Sudan,12.862807,30.217636,SDN,..,..,197326.7
 Forest area (sq. km),AG.LND.FRST.K2,Suriname,3.919305,-56.027783,SUR,152998.6,152902.22,152805.84,152709.46,152613.08,152516.7,152403.2,152330.2,152207.8,152085.3,151962.9,151840.433,151718.011,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Sweden,60.128161,18.643501,SWE,280730,280544,280358,280172,279986,279800,279800,279800,279800,279800,279800,279800,279800,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Switzerland,46.818188,8.227512,CHE,12347.2,12381.58,12415.96,12450.34,12484.72,12519.1,12553.5,12587.9,12622.3,12656.7,12691.1,12725.5,12759.9,..,..
-Forest area (sq. km),AG.LND.FRST.K2,Syrian Arab Republic, ,,SYR,4920.8,4980.8,5040.8,5100.8,5160.8,5220.8,5220.8,5220.8,5220.8,5220.8,5220.8,5220.8,5220.8,..,..
+Forest area (sq. km),AG.LND.FRST.K2,Syria,34.802075,38.996815,SYR,4920.8,4980.8,5040.8,5100.8,5160.8,5220.8,5220.8,5220.8,5220.8,5220.8,5220.8,5220.8,5220.8,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Tajikistan,38.861034,71.276093,TJK,4100,4123.6,4147.2,4170.8,4194.4,4218,4218,4218,4218,4228,4238,4248,4258,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Tanzania,-6.369028,34.888822,TZA,499500.1,495780.08,492060.06,488340.04,484620.02,480900,476210,471520,466830,462140,457450,452760,448070,..,..
 Forest area (sq. km),AG.LND.FRST.K2,Thailand,15.870032,100.992541,THA,200730,200706,200682,200658,200634,200610,200170,199810,199450,199090,198730,198370,198010,..,..
@@ -263,3 +263,5 @@ The lag between the reference year and the actual production of data series as w
 
 
 Data includes areas with bamboo and palms; forest roads, firebreaks and other small open areas; forest in national parks, nature reserves and other protected areas such as those of specific scientific, historical, cultural or spiritual interest; windbreaks, shelterbelts and corridors of trees with an area of more than 0.5 hectares and width of more than 20 meters; plantations primarily used for forestry or protective purposes, such as rubber-wood plantations and cork oak stands. Data excludes tree stands in agricultural production systems, such as fruit plantations and agroforestry systems. Forest area also excludes trees in urban parks and gardens. The proportion of forest area to total land area is calculated and changes in the proportion are computed to identify trends.",The world and regional aggregate series do not include data from countries that no longer exist.,,,https://creativecommons.org/licenses/by/4.0/,,,,,,,,,,,,,,,
+
+
