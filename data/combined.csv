@@ -1,4 +1,4 @@
-Country Name,Latitude,Longitude,Country Code,Attribute,Land Area,Forest Area,Tree cover loss driven by all causes,,,,
+Country Name,Latitude,Longitude,Country Code,Year,Land Area,Forest Area,Tree cover loss driven by all causes,,,,
 Afghanistan,33.93911,67.709953,AFG,2010,652230,12084.4,78.03391,,,,
 Afghanistan,33.93911,67.709953,AFG,2011,652230,12084.4,100.55386,,,,
 Afghanistan,33.93911,67.709953,AFG,2012,652230,12084.4,28.883047,,,,
@@ -2386,3 +2386,4 @@ Zimbabwe,-19.015438,29.154857,ZWE,2017,386850,175827.9,25847.252,,,,
 Zimbabwe,-19.015438,29.154857,ZWE,2018,386850,175367.2,6530.5366,,,,
 Zimbabwe,-19.015438,29.154857,ZWE,2019,386850,174906.5,11497.8,,,,
 Zimbabwe,-19.015438,29.154857,ZWE,2020,386850,174445.8,6190.6475,,,,
+
