@@ -1,27 +1,27 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Stacked bar chart per year showing the Top 5 entities; all others combined into 'Others'.",
-  "width": 800,
+  "description": "Stacked bar chart per year showing Top 5 countries by tree cover loss; all others combined as 'Others'.",
+  "width": 900,
   "height": 500,
   "data": {
-    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/tree-cover-loss.csv"
+    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/combined.csv",
+    "format": { "type": "csv" }
   },
   "transform": [
-    { "calculate": "toNumber(datum['Tree cover loss driven by all causes'])", "as": "TreeCoverLoss" },
-    { "filter": "datum['Year']>2009 && datum['Year']<2021" },
-
+    { "calculate": "toNumber(datum['Tree cover loss driven by all causes'])", "as": "Loss" },
+    { "filter": "isValid(datum.Year) && isValid(datum['Country Name']) && isFinite(datum.Loss)" },
     {
       "aggregate": [
-        { "op": "sum", "field": "TreeCoverLoss", "as": "TreeCoverLossSum" }
+        { "op": "sum", "field": "Loss", "as": "LossSum" }
       ],
-      "groupby": ["Year", "Entity"]
+      "groupby": ["Year", "Country Name"]
     },
     {
       "window": [{ "op": "rank", "as": "rank" }],
-      "sort": [{ "field": "TreeCoverLossSum", "order": "descending" }],
+      "sort": [{ "field": "LossSum", "order": "descending" }],
       "groupby": ["Year"]
     },
-    { "calculate": "datum.rank <= 5 ? datum.Entity : 'Others'", "as": "EntityTop" },
+    { "calculate": "datum.rank <= 5 ? datum['Country Name'] : 'Others'", "as": "EntityTop" },
     { "calculate": "datum.EntityTop == 'Others' ? 1 : 0", "as": "isOthers" }
   ],
   "mark": { "type": "bar" },
@@ -34,25 +34,24 @@
     },
     "y": {
       "aggregate": "sum",
-      "field": "TreeCoverLossSum",
+      "field": "LossSum",
       "type": "quantitative",
-      "axis": { "title": "Tree cover loss (ha)" }
+      "axis": { "title": "Tree cover loss (units from source)" }
     },
     "color": {
       "field": "EntityTop",
       "type": "nominal",
-      "legend": { "title": "Entity / Group" }
+      "legend": { "title": "Country / Group" }
     },
     "order": { "field": "isOthers", "type": "quantitative", "sort": "ascending" },
     "tooltip": [
-      { "field": "EntityTop", "type": "nominal", "title": "Entity/Group" },
+      { "field": "EntityTop", "type": "nominal", "title": "Country/Group" },
       { "field": "Year", "type": "ordinal" },
-      {
-        "aggregate": "sum",
-        "field": "TreeCoverLossSum",
-        "type": "quantitative",
-        "title": "Tree Cover Loss",
-        "format": ".0f"
-      }
+      { "aggregate": "sum", "field": "LossSum", "type": "quantitative", "title": "Tree cover loss", "format": "," }
     ]
-  }}
+  },
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": true }
+  }
+}
