@@ -47,11 +47,7 @@
     "tooltip": [
       { "field": "EntityTop", "type": "nominal", "title": "Country/Group" },
       { "field": "Year", "type": "ordinal" },
-      { "aggregate": "sum", "field": "LossSum", "type": "quantitative", "title": "Tree cover loss", "format": "," }
+      { "aggregate": "sum", "field": "LossSum", "type": "quantitative", "title": "Tree cover loss", "format": ".0f" }
     ]
-  },
-  "config": {
-    "view": { "stroke": null },
-    "axis": { "grid": true }
   }
 }
