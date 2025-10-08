@@ -1,0 +1,58 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Stacked bar chart per year showing the Top 5 entities; all others combined into 'Others'.",
+  "width": 800,
+  "height": 500,
+  "data": {
+    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/tree-cover-loss.csv"
+  },
+  "transform": [
+    { "calculate": "toNumber(datum['Tree cover loss driven by all causes'])", "as": "TreeCoverLoss" },
+    { "filter": "datum['Year']>2009 && datum['Year']<2021" },
+
+    {
+      "aggregate": [
+        { "op": "sum", "field": "TreeCoverLoss", "as": "TreeCoverLossSum" }
+      ],
+      "groupby": ["Year", "Entity"]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "TreeCoverLossSum", "order": "descending" }],
+      "groupby": ["Year"]
+    },
+    { "calculate": "datum.rank <= 5 ? datum.Entity : 'Others'", "as": "EntityTop" },
+    { "calculate": "datum.EntityTop == 'Others' ? 1 : 0", "as": "isOthers" }
+  ],
+  "mark": { "type": "bar" },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "sort": "ascending",
+      "axis": { "title": "Year", "labelAngle": 0 }
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "TreeCoverLossSum",
+      "type": "quantitative",
+      "axis": { "title": "Tree cover loss (ha)" }
+    },
+    "color": {
+      "field": "EntityTop",
+      "type": "nominal",
+      "legend": { "title": "Entity / Group" }
+    },
+    "order": { "field": "isOthers", "type": "quantitative", "sort": "ascending" },
+    "tooltip": [
+      { "field": "EntityTop", "type": "nominal", "title": "Entity/Group" },
+      { "field": "Year", "type": "ordinal" },
+      {
+        "aggregate": "sum",
+        "field": "TreeCoverLossSum",
+        "type": "quantitative",
+        "title": "Tree Cover Loss",
+        "format": ".0f"
+      }
+    ]
+  }}
