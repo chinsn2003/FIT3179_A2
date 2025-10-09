@@ -1,0 +1,103 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Drivers of Tree Cover Loss (%)", "fontSize": 20},
+  "width": 560,
+  "height": 560,
+  "data": {
+    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/tree_cover_loss_by_driver.csv",
+    "format": {"type": "csv"}
+  },
+
+  "params": [
+    {
+      "name": "year",
+      "value": 2010,
+      "bind": {"input": "range", "min": 2010, "max": 2020, "step": 1, "name": "Year: "}
+    }
+  ],
+
+  "transform": [
+    {"filter": "toNumber(datum.loss_year) == year"},
+    {"calculate": "toNumber(datum.loss_area_ha)/1e6", "as": "Loss_M"},
+
+    {"aggregate": [{"op": "sum", "field": "Loss_M", "as": "Total_M"}], "groupby": ["drivers_type"]},
+    {"joinaggregate": [{"op": "sum", "field": "Total_M", "as": "GrandTotal_M"}]},
+    {"calculate": "datum.GrandTotal_M > 0 ? datum.Total_M / datum.GrandTotal_M : 0", "as": "Share"},
+
+    {"calculate": "datum.Share >= 0.05 ? datum.drivers_type : 'Others'", "as": "Group"},
+    {"aggregate": [{"op": "sum", "field": "Total_M", "as": "TotalG"}], "groupby": ["Group"]},
+    {"joinaggregate": [{"op": "sum", "field": "TotalG", "as": "GrandG"}]},
+    {"calculate": "datum.GrandG > 0 ? datum.TotalG / datum.GrandG : 0", "as": "ShareG"},
+
+    {"calculate": "datum.Group + '\\n' + format(datum.ShareG, '.0%')", "as": "Label"},
+    {"calculate": "toString(year)", "as": "YearParam"},
+
+    {
+      "window": [{"op": "sum", "field": "ShareG", "as": "CumShare"}],
+      "sort": [{"field": "TotalG", "order": "descending"}]
+    },
+    {"calculate": "datum.CumShare - datum.ShareG", "as": "StartShare"},
+    {"calculate": "datum.StartShare + datum.ShareG/2", "as": "MidShare"},
+    {"calculate": "2 * PI * datum.MidShare", "as": "Angle"},
+    {"calculate": "datum.Angle * 180 / PI", "as": "AngleDeg"},
+    {
+      "calculate": "(datum.AngleDeg >= 90 && datum.AngleDeg <= 270) ? datum.AngleDeg + 180 : datum.AngleDeg",
+      "as": "AngleText"
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {
+        "type": "arc",
+        "innerRadius": 130,
+        "outerRadius": 255,
+        "padAngle": 0.018,
+        "cornerRadius": 4,
+        "stroke": "#ffffff",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "theta": {"field": "TotalG", "type": "quantitative", "stack": true},
+        "color": {"field": "Group", "type": "nominal", "legend": null},
+        "order": {"field": "TotalG", "type": "quantitative", "sort": "descending"},
+        "tooltip": [
+          {"field": "Group", "title": "Driver"},
+          {"field": "TotalG", "type": "quantitative", "title": "Loss (million ha)", "format": ".3f"},
+          {"field": "ShareG", "type": "quantitative", "title": "Share", "format": ".1%"},
+          {"field": "YearParam", "title": "Year"}
+        ]
+      }
+    },
+
+    {
+      "mark": {
+        "type": "text",
+        "radius": 192,                
+        "align": "center",
+        "baseline": "middle",
+        "fontSize": 12,
+        "lineBreak": "\n",
+        "limit": 95                   
+      },
+      "encoding": {
+        "theta": {"field": "TotalG", "type": "quantitative", "stack": true},
+        "order": {"field": "TotalG", "type": "quantitative", "sort": "descending"},
+        "text": {"field": "Label"},
+        "color": {"value": "black"}
+      }
+    },
+
+    {
+      "mark": {"type": "text", "radius": 0, "align": "center", "baseline": "middle", "fontSize": 14},
+      "encoding": { "text": {"value": "Loss (M ha)"} }
+    },
+    {
+      "transform": [{"aggregate": [{"op": "max", "field": "YearParam", "as": "YearParam"}]}],
+      "mark": {"type": "text", "radius": 0, "align": "center", "baseline": "top", "dy": 16, "fontSize": 13},
+      "encoding": { "text": {"field": "YearParam"} }
+    }
+  ],
+
+  "config": { "view": { "stroke": null } }
+}
