@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Stacked bar chart per year showing Top 5 countries by tree cover loss; all others combined as 'Others'.",
-  "width": 900,
-  "height": 500,
+  "title": {"text": "Tree Cover Loss Driven By All Causes", "fontSize": 28},
+  "width": 800,
+  "height": 420,
   "data": {
     "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/combined.csv",
     "format": { "type": "csv" }
@@ -36,7 +36,7 @@
       "aggregate": "sum",
       "field": "LossSum",
       "type": "quantitative",
-      "axis": { "title": "Tree cover loss (units from source)" }
+      "axis": { "title": "Tree cover loss (ha)" }
     },
     "color": {
       "field": "EntityTop",

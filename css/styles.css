@@ -1,0 +1,16 @@
+#vis1 {
+	bottom: 20px; 
+	left: 100px;
+	right: 100px;
+	height: fit-content;
+	width: fit-content;
+}
+
+#vis2 {
+	top:20px;
+	bottom: 100px; 
+	left: 100px;
+	right: 100px;
+	height: fit-content;
+	width: fit-content;
+}
