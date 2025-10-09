@@ -1,0 +1,20 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Loss caused by different drivers over Time", "fontSize": 20},
+  "width": 800,
+  "height": 420,
+  "data": {"url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/tree_cover_loss_by_driver.csv", "format": {"type": "csv"}},
+  "transform": [
+    { "calculate": "toNumber(datum.loss_area_ha)/1e6","as": "Loss_M" }
+  ],
+  "mark": {"type": "area"},
+  "encoding": {
+    "x": {"field": "loss_year", "type": "ordinal", "sort": "ascending", "axis": {"title": "Year"}},
+    "y": {"aggregate": "sum", "field": "Loss_M", "type": "quantitative", "axis": {"title": "Loss (m Ha)"}},
+    "color": {"field": "drivers_type", "type": "nominal", "title": "Driver"},
+    "tooltip": [
+      {"field": "drivers_type", "title": "Driver"},
+      {"field": "loss_year", "title": "Year"},
+      {"aggregate": "sum", "field": "Loss_M", "title": "Loss (m Ha)", "format": ".2f"}
+    ]
+  }}
