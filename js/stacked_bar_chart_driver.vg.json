@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 420,
+  "title": "Drivers of Deforestation — Stacked by Year (Million ha)",
+  "data": {
+    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/tree_cover_loss_by_driver.csv"
+  },
+  "transform": [
+    { "calculate": "toNumber(datum.loss_area_ha)", "as": "loss" },
+    { "calculate": "toNumber(datum.loss_year)", "as": "year" },
+    { "filter": "isFinite(datum.loss) && datum.loss >= 0 && isFinite(datum.year)" },
+
+    { "aggregate": [{"op": "sum", "field": "loss", "as": "sumLoss"}],
+      "groupby": ["drivers_type", "year"] },
+
+    { "joinaggregate": [{"op": "sum", "field": "sumLoss", "as": "totalLossYear"}],
+      "groupby": ["year"] },
+
+    { "calculate": "datum.totalLossYear>0 ? 100*datum.sumLoss/datum.totalLossYear : 0", "as": "sharePct" },
+
+    { "calculate": "datum.sumLoss / 1e6", "as": "sumLoss_Mha" }
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "x": { "field": "year", "type": "ordinal", "title": "Year", "sort": "ascending"},
+    "y": {
+      "field": "sumLoss_Mha",
+      "type": "quantitative",
+      "title": "Tree cover loss (million ha)",
+      "stack": true,
+      "axis": { "format": ",.0f" }
+    },
+    "color": { "field": "drivers_type", "type": "nominal", "title": "Driver" },
+    "tooltip": [
+      { "field": "drivers_type", "type": "nominal", "title": "Driver" },
+      { "field": "year", "type": "ordinal", "title": "Year" },
+      { "field": "sumLoss_Mha", "type": "quantitative", "title": "Loss (million ha)", "format": ",.2f" },
+      { "field": "sharePct", "type": "quantitative", "title": "Share (%)", "format": ".1f" },
+      { "field": "totalLossYear", "type": "quantitative", "title": "Total (million ha)", "format": ",.2f" }
+    ]
+  },
+  "config": {
+    "axis": { "labelFontSize": 12, "titleFontSize": 12 },
+    "legend": { "labelFontSize": 12, "titleFontSize": 12 }
+  }
+}

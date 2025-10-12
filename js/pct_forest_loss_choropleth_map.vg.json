@@ -1,91 +1,98 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "Percentage of Global Forest Area Lost by 2015", "fontSize": 28},
+  "title": "Annual Tree Cover Loss per Forest Area (%)",
   "width": 800,
-  "height": 400,
+  "height": 420,
   "projection": {"type": "equalEarth"},
-  "layer": [
+  "params": [
     {
-      "data": {"sphere": true},
-      "mark": {"type": "geoshape", "fill": "#eef6fb", "stroke": null}
+      "name": "YearSel",
+      "value": 2010,
+      "bind": { "input": "range", "min": 2010, "max": 2020, "step": 1, "name": "Year: " }
+    }
+  ],
+
+  "layer": [{
+      "data": { "sphere": true },
+      "mark": { "type": "geoshape", "fill": "#eef6fb", "stroke": null }
     },{
       "data": {
         "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
-        "format": {"type": "topojson", "feature": "oceans"}
+        "format": { "type": "topojson", "feature": "oceans" }
       },
-      "mark": {"type": "geoshape", "fill": "skyblue"}
+      "mark": { "type": "geoshape", "fill": "skyblue" }
     },
     {
       "data": {
         "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/WorldMapWithGraticules.topojson",
-        "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
+        "format": { "type": "topojson", "feature": "ne_110m_graticules_30" }
       },
-      "mark": {"type": "geoshape", "fill": null, "stroke": "#cccccc", "strokeWidth": 0.5}
+      "mark": { "type": "geoshape", "fill": null, "stroke": "#cccccc", "strokeWidth": 0.5 }
     },
     {
       "data": {
         "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
-        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+        "format": { "type": "topojson", "feature": "ne_110m_admin_0_countries" }
       },
       "transform": [
-        {
-          "calculate": "'Data is not available in ' + datum.properties.NAME",
-          "as": "note"
-        }
+        { "calculate": "'Data is not available in ' + datum.properties.NAME", "as": "note" }
       ],
-      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
+      "mark": { "type": "geoshape", "fill": "lightgray", "stroke": "white" },
       "encoding": {
-        "tooltip": {"field": "note", "type": "nominal", "title": null}
+        "tooltip": { "field": "note", "type": "nominal", "title": null }
       }
     },
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
-        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
-      },
+      "data": {"url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/combined.csv"},
       "transform": [
+        { "calculate": "toNumber(datum['Year'])", "as": "yearNum" },
+        { "filter": "datum.yearNum == YearSel" },
+
+        { "calculate": "toNumber(datum['Forest Area'])", "as": "forest_ha" },
+        { "calculate": "toNumber(datum['Tree cover loss driven by all causes'])", "as": "loss_ha" },
+
+        { "calculate": "datum.forest_ha > 0 ? 100 * datum.loss_ha / datum.forest_ha : null",
+          "as": "pct_loss_forest" },
+
         {
-          "lookup": "properties.NAME",
+          "lookup": "Country Code",
           "from": {
             "data": {
-              "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/c7650b6daa42e9759855d5d06e124f9c5ca28d66/Forest_Area.csv"
+              "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+              "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
             },
-            "key": "Country and Area",
-            "fields": ["Country and Area", "Forest Area, 2010", "Forest Area, 2015"]
-          }
+            "key": "properties.ISO_A3"
+          },
+          "as": "geo",
+          "default": null
         },
-        {"calculate": "toNumber(datum['Forest Area, 2010'])", "as": "F2010"},
-        {"calculate": "toNumber(datum['Forest Area, 2015'])", "as": "F2015"},
-        {
-          "calculate": "datum.F2010 > 0 && isValid(datum.F2015) ? ((datum.F2010 - datum.F2015) / datum.F2010) * 100 : null",
-          "as": "Loss10y_raw"
-        },
-        {
-          "calculate": "datum.Loss10y_raw > 0 ? datum.Loss10y_raw : null",
-          "as": "PctLoss_2010_2015"
-        },
-        {
-          "calculate": "isValid(datum.PctLoss_2010_2015) ? max(0.001, datum.PctLoss_2010_2015) : null",
-          "as": "pcnt_loss"
-        }
+        { "filter": "datum.geo != null" }
       ],
-      "mark": {"type": "geoshape", "stroke": "white"},
+      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
       "encoding": {
+        "shape": {"field": "geo", "type": "geojson"},
         "color": {
-          "field": "pcnt_loss",
+          "field": "pct_loss_forest",
           "type": "quantitative",
-          "scale": {"type": "linear", "domainMin": 0.001,"range": ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"]
-},
-          "legend": {"title": "Forest area lost (% of 2010)"}
-                },
+          "title": "Loss per forest area (%)",
+          "legend": {"format": ".1f"},
+          "scale": {"domain": [0.001, 8], "range": ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"]}
+        },
         "tooltip": [
-          {"field": "properties.NAME", "type": "nominal", "title": "Country"},
-          {"field": "F2010", "type": "quantitative", "title": "Forest area 2010 (1000 ha)", "format": ",.0f"},
-          {"field": "F2015", "type": "quantitative", "title": "Forest area 2015 (1000 ha)", "format": ",.0f"},
-          {"field": "PctLoss_2010_2015", "type": "quantitative", "title": "% of 2010 area lost by 2015", "format": ".2f"}
+          {"field": "Country Name", "type": "nominal", "title": "Country"},
+          {"field": "yearNum", "type": "quantitative", "title": "Year"},
+          {"field": "loss_ha", "type": "quantitative", "title": "Loss (ha)", "format": ",.0f"},
+          {"field": "forest_ha", "type": "quantitative", "title": "Land area (ha)", "format": ",.0f"},
+          {"field": "pct_loss_forest", "type": "quantitative", "title": "Loss / forest (%)", "format": ".3f"}
         ]
       }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+      },
+      "mark": {"type": "geoshape", "fill": null, "stroke": "#bbb", "strokeWidth": 0.2}
     }
-  ],
-  "config": {"background": "transparent"}
+  ]
 }

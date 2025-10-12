@@ -1,0 +1,80 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Deforestation vs Reforestation (2010–2020): Top 10 (hectares)",
+  "width": 900,
+  "height": 500,
+
+  "params": [
+    {
+      "name": "SortSel",
+      "value": "Deforestation",
+      "bind": {
+        "input": "select",
+        "options": ["Deforestation", "Reforestation"],
+        "name": "Sort by: "
+      }
+    }
+  ],
+
+  "data": { "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/treecover_loss_gain_by_country_ha.csv" },
+
+  "transform": [
+    {
+      "calculate": "datum['Sum of Tree Cover Loss 2010-2020'] == null ? 0 : toNumber(datum['Sum of Tree Cover Loss 2010-2020'])",
+      "as": "loss"
+    },
+    {
+      "calculate": "datum['Sum of Tree Cover Gain 2010-2020'] == null ? 0 : toNumber(datum['Sum of Tree Cover Gain 2010-2020'])",
+      "as": "gain"
+    },
+
+    {
+      "window": [{ "op": "rank", "as": "rankLoss" }],
+      "sort": [{ "field": "loss", "order": "descending" }]
+    },
+    {
+      "window": [{ "op": "rank", "as": "rankGain" }],
+      "sort": [{ "field": "gain", "order": "descending" }]
+    },
+
+    { "calculate": "SortSel == 'Deforestation' ? datum.loss : datum.gain", "as": "sortKey" },
+    { "filter": "SortSel == 'Deforestation' ? datum.rankLoss <= 10 : datum.rankGain <= 10" },
+
+    { "fold": ["loss", "gain"], "as": ["metric", "amount"] },
+    { "calculate": "datum.metric == 'loss' ? -datum.amount : datum.amount", "as": "value" }
+  ],
+
+  "mark": { "type": "bar" },
+
+  "encoding": {
+    "y": {
+      "field": "Country",
+      "type": "nominal",
+      "title": "Country",
+      "sort": { "field": "sortKey", "order": "descending" }
+    },
+    "x": {
+      "field": "value",
+      "type": "quantitative",
+      "axis": { "title": "Tree cover (ha): loss ⟵ 0 ⟶ gain", "format": ",.0f" },
+      "scale": { "zero": true }
+    },
+    "color": {
+      "field": "metric",
+      "type": "nominal",
+      "title": null,
+      "scale": { "domain": ["loss", "gain"], "range": ["#d7301f", "#1a9850"] }
+    },
+    "tooltip": [
+      { "field": "ISO", "type": "nominal", "title": "ISO3" },
+      { "field": "loss", "type": "quantitative", "title": "Loss (ha)", "format": ",.0f" },
+      { "field": "gain", "type": "quantitative", "title": "Gain (ha)", "format": ",.0f" }
+    ]
+  },
+
+  "config": {
+    "bar": { "size": 14 },
+    "axis": { "labelFontSize": 12, "titleFontSize": 12 },
+    "legend": { "labelFontSize": 12, "titleFontSize": 12 }
+  }
+}
