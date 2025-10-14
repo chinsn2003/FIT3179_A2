@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "Percentage of Global Forest Area by Land Area", "fontSize": 28},
+  "title": {"text": "Percentage of Global Forest Area by Land Area"},
   "width": 800,
   "height": 420,
   "projection": {"type": "equalEarth"},

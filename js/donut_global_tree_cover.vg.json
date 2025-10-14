@@ -1,0 +1,53 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Forest Composition: Primary, Planted, Other Tree Cover, Non-Forest 2020",
+  "width": 800,
+  "height": 420,
+  "data": {
+    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/fao_treecover_extent__ha.csv"
+  },
+  "transform": [
+    { "calculate": "isValid(datum['primary_forest__ha']) && datum['primary_forest__ha']!='' ? toNumber(datum['primary_forest__ha']) : 0", "as": "primary" },
+    { "calculate": "isValid(datum['planted_forest__ha']) && datum['planted_forest__ha']!='' ? toNumber(datum['planted_forest__ha']) : 0", "as": "planted" },
+    { "calculate": "isValid(datum['fao_treecover__ha']) && datum['fao_treecover__ha']!='' ? toNumber(datum['fao_treecover__ha']) : 0", "as": "treecover" },
+    { "calculate": "isValid(datum['area_ha']) && datum['area_ha']!='' ? toNumber(datum['area_ha']) : 0", "as": "land" },
+
+    { "calculate": "max(0, datum.treecover - datum.primary - datum.planted)", "as": "other_tree" },
+
+    { "calculate": "max(0, datum.land - datum.treecover)", "as": "non_forest" },
+
+    {
+      "aggregate": [
+        {"op":"sum","field":"primary","as":"PRI"},
+        {"op":"sum","field":"planted","as":"PLA"},
+        {"op":"sum","field":"other_tree","as":"OTH"},
+        {"op":"sum","field":"non_forest","as":"NFL"}
+      ]
+    },
+
+    { "fold": ["PRI","PLA","OTH","NFL"], "as": ["key","area"] },
+
+    { "calculate": "({'PRI':'Primary Forest','PLA':'Planted Forest','OTH':'Other Tree Cover','NFL':'Non-Forest'})[datum.key]", "as": "typeLabel" },
+    { "joinaggregate": [{"op":"sum","field":"area","as":"total_area"}] },
+    { "calculate": "datum.total_area>0 ? 100*datum.area/datum.total_area : null", "as": "pct" }
+  ],
+  "mark": { "type": "arc", "innerRadius": 90, "outerRadius": 160 },
+  "encoding": {
+    "theta": { "field": "area", "type": "quantitative" },
+    "color": {
+      "field": "typeLabel",
+      "type": "nominal",
+      "title": "Type",
+      "scale": {
+        "domain": ["Primary Forest","Planted Forest","Other Tree Cover","Non-Forest"],
+        "range": ["#16a34a","#3b82f6","#f59e0b","#d1d5db"]
+      }
+    },
+    "order": { "field": "area", "type": "quantitative", "sort": "descending" },
+    "tooltip": [
+      { "field": "typeLabel", "type": "nominal", "title": "Type" },
+      { "field": "area", "type": "quantitative", "title": "Area (ha)", "format": ",.0f" },
+      { "field": "pct", "type": "quantitative", "title": "Share (%)", "format": ".1f" }
+    ]
+  }
+}

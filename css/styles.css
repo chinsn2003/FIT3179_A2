@@ -1,16 +1,50 @@
-#vis1 {
-	bottom: 20px; 
-	left: 100px;
-	right: 100px;
-	height: fit-content;
-	width: fit-content;
+:root { --maxw: 1100px; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #111;
+  background: #fafafa;
 }
 
-#vis2 {
-	top:20px;
-	bottom: 100px; 
-	left: 100px;
-	right: 100px;
-	height: fit-content;
-	width: fit-content;
+.page {
+  max-width: var(--maxw);
+  margin: 24px auto 56px;
+  padding: 0 16px;
 }
+
+/* Typography */
+h1 { margin: 0 0 6px; font-size: 30px; line-height: 1.2; }
+.subtitle { color: #555; margin: 0 0 18px; font-size: 14px; }
+.section-title { margin: 22px 0 12px; font-size: 18px; font-weight: 600; }
+.small { font-size: 12px; color: #666; }
+
+/* Cards & containers */
+.vis-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 14px;
+  align-items: center; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* horizontal centering */
+  justify-content: center; /* vertical centering if there is extra height */
+  text-align: center;      /* center caption text */
+
+}
+
+.vis-container { min-height: 320px; align-items: center; padding: 5px;}
+
+.figure { margin: 0; }
+.figcaption { margin-top: 10px; font-size: 13px; color: #555; }
+.desc { font-size: 16px; color: #333; line-height: 1.4; }
+
+/* Spacing helpers */
+
+/* Optional: make embedded charts responsive if they provide width:auto */
+.vega-embed, .vega-embed > div {
+  width: 100%;
+}
+

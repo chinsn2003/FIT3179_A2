@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "Loss caused by different drivers over Time", "fontSize": 20},
+  "title": {"text": "Loss caused by different drivers over Time"},
   "width": 800,
   "height": 420,
   "data": {"url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/tree_cover_loss_by_driver.csv", "format": {"type": "csv"}},

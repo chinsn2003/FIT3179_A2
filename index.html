@@ -2,27 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>% of Forest Area Lost, 2010–2020</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>Global Forest Change, 2010–2020</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.8"></script>
-  <style>
-    body { margin: 0; padding: 0; font-family: system-ui, sans-serif; }
-    #vis { max-width: 1000px; margin: 24px auto; }
-  </style>
-</head>
-<body>
-  <div id="vis1"></div>
-  <div id="vis2"></div>
 
-<script>
-    vegaEmbed('#vis1', "js/pct_forest_choropleth_map.vg.json", { "actions": false }).then(function (result) {
-        }).catch(console.error);
-        
-     vegaEmbed('#vis2', "js/stacker_bar_chart_tree_forest_loss.vg.json", { "actions": false }).then(function (result) {
-    }).catch(console.error);
+</head>
+
+<body>
+  <div class="page">
+    <!-- Header -->
+    <header class="pure-g">
+      <div class="pure-u-1">
+        <h1>Global Forest Change, 2010–2020</h1>
+        <p class="subtitle">Overview of forest extent, spatial loss rates, temporal drivers, and net change.</p>
+      </div>
+    </header>
+
+    <!-- SECTION 1: Overview donut + Choropleth (two columns; each has chart + description) -->
+    <!-- <h2 class="section-title">Overview</h2> -->
+    <section class="pure-g mb24">
+      <!-- Donut + description -->
+      <div class="pure-u-1 pure-u-md-1-2 mb16">
+        <figure class="vis-card">
+          <div id="vis1" class="vis-container" aria-label="Global forest extent donut chart"></div>
+          <figcaption class="desc">
+            About <strong> 31% (~4.11 Gha) </strong> of Earth’s land area was forested; roughly 8.5% of this was primary forest.
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Choropleth + description -->
+      <div class="pure-u-1 pure-u-md-1-2 mb16">
+        <figure class="vis-card">
+          <div id="vis2" class="vis-container" aria-label="Choropleth map of annual percentage forest loss"></div>
+          <figcaption class="desc">
+            Consistently high-loss hotspots appear in West Africa (notably Côte d’Ivoire),<br> parts of Central Africa,
+            and Southeast Asia (Indonesia–Malaysia–Mekong region).
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Primary tree cover loss + description (single column) -->
+    <!-- <h2 class="section-title">Primary Forest Loss</h2> -->
+    <section class="pure-g mb24">
+      <div class="pure-u-1">
+        <figure class="vis-card">
+          <div id="vis3" class="vis-container" aria-label="Bar chart of primary tree cover loss"></div>
+          <figcaption class="desc">
+          Loss fluctuates around 3–4 million ha in the early 2010s, surges <br>
+          to a decade peak in 2016 (~6.2 Mha), remains elevated in 2017 (~5.0 Mha),<br>
+          then drops in 2018 (~3.4 Mha).
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Loss caused by different drivers + description (single column) -->
+    <!-- <h2 class="section-title">Drivers of Forest Loss Over Time</h2> -->
+    <section class="pure-g mb24">
+      <div class="pure-u-1">
+        <figure class="vis-card">
+          <div id="vis4" class="vis-container" aria-label="Stacked area chart for drivers of forest loss over time"></div>
+          <figcaption class="desc"> 
+            Permanent agriculture is the largest, most persistent driver, shaping the overall <br> 
+            pattern and the 2016–2017 peak. Wildfire shows surges—notably in 2016 and again by <br> 
+            2020—pushing totals up in those years. 
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Description + Reforestation/Net change bar (two columns) -->
+    <!-- <h2 class="section-title">Net Change: Deforestation vs. Reforestation</h2> -->
+    <section class="pure-g">
+      <div class="pure-u-1 pure-u-md-2-3 mb16">
+        <figure class="vis-card">
+          <div id="vis5" class="vis-container" aria-label="Horizontal diverging bars for deforestation vs reforestation"></div>
+          <figcaption class="desc">
+            Top ten countries by gross forest loss are led by Russia and <br> Brazil, with Canada and the United States following. 
+            Most countries show <br> reforestation activity that is far smaller than their deforestation , indicating net <br> losses overall.
+            </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p class="small">
+        Visualisation by Sze-Ning Chin. Data sources: Global Forest Watch.
+      </p>
+    </footer>
+  </div>
+
+  <!-- Vega embeds -->
+  <script>
+    vegaEmbed('#vis1', "js/donut_global_tree_cover.vg.json", { actions: false }).catch(console.error);
+    vegaEmbed('#vis2', "js/pct_forest_loss_choropleth_map.vg.json", { actions: false }).catch(console.error);
+    vegaEmbed('#vis3', "js/bar_chart_primary_tree_loss.vg.json", { actions: false }).catch(console.error);
+    vegaEmbed('#vis4', "js/stacked_area_driver.vg.json", { actions: false }).catch(console.error);
+    vegaEmbed('#vis5', "js/horizontal_bar_deforestation_reforestation.vg.json", { actions: false }).catch(console.error);
   </script>
 </body>
 </html>
