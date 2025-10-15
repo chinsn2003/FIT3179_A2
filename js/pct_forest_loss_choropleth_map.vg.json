@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Annual Tree Cover Loss per Forest Area (%)",
-  "width": 800,
-  "height": 420,
+  "width": 750,
+  "height": 350,
   "projection": {"type": "equalEarth"},
   "params": [
     {

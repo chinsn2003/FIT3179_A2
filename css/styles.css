@@ -1,50 +1,52 @@
-:root { --maxw: 1100px; }
+:body *{
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+  font-weight: 900;
+}
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  color: #111;
-  background: #fafafa;
+  background-color: lightgray;
 }
 
 .page {
-  max-width: var(--maxw);
-  margin: 24px auto 56px;
-  padding: 0 16px;
+  width: 1000px;
+  background-color: white;
+  margin: auto;
+  padding: 50px;
+  padding-top: 35px;
 }
 
-/* Typography */
-h1 { margin: 0 0 6px; font-size: 30px; line-height: 1.2; }
-.subtitle { color: #555; margin: 0 0 18px; font-size: 14px; }
-.section-title { margin: 22px 0 12px; font-size: 18px; font-weight: 600; }
-.small { font-size: 12px; color: #666; }
-
-/* Cards & containers */
-.vis-card {
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 14px;
-  align-items: center; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;     /* horizontal centering */
-  justify-content: center; /* vertical centering if there is extra height */
-  text-align: center;      /* center caption text */
+.vis-container {
+  width: 100%;
+  height: 100%;
 
 }
 
-.vis-container { min-height: 320px; align-items: center; padding: 5px;}
+.description h2,
+h1 {
+  margin-top: 0px;
+}
 
-.figure { margin: 0; }
-.figcaption { margin-top: 10px; font-size: 13px; color: #555; }
-.desc { font-size: 16px; color: #333; line-height: 1.4; }
+.description-right {
+  padding-left: 20px;
+}
 
-/* Spacing helpers */
+.description-left {
+  padding-right: 20px;
+}
 
-/* Optional: make embedded charts responsive if they provide width:auto */
-.vega-embed, .vega-embed > div {
+.pure-g {
+  margin-top: 40px;
+
+  margin-bottom: 40px;
+}
+
+.small-font {
+  font-size: 14px;
+}
+
+.vis1, .vis2 , .vis3 , .vis4 , .vis5 {
   width: 100%;
 }
-

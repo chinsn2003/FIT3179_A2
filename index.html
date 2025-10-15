@@ -27,45 +27,49 @@
       </div>
     </header>
 
-    <!-- SECTION 1: Overview donut + Choropleth (two columns; each has chart + description) -->
-    <!-- <h2 class="section-title">Overview</h2> -->
-    <section class="pure-g mb24">
-      <!-- Donut + description -->
-      <div class="pure-u-1 pure-u-md-1-2 mb16">
-        <figure class="vis-card">
-          <div id="vis1" class="vis-container" aria-label="Global forest extent donut chart"></div>
-          <figcaption class="desc">
-            About <strong> 31% (~4.11 Gha) </strong> of Earth’s land area was forested; roughly 8.5% of this was primary forest.
-          </figcaption>
-        </figure>
+    <!-- Choropleth + description -->
+
+    <div id="vis2" class="vis-container"></div>          
+    <p>The first column contains text and the second column contains a visualisation.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Massa sapien faucibus et molestie ac feugiat sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Massa sapien faucibus et molestie ac feugiat sed. </p>
+
+    <div class="pure-g">
+
+      <div class="pure-u-1-2">
+        <div id="vis1" class="vis-container"></div>
       </div>
 
-      <!-- Choropleth + description -->
-      <div class="pure-u-1 pure-u-md-1-2 mb16">
-        <figure class="vis-card">
-          <div id="vis2" class="vis-container" aria-label="Choropleth map of annual percentage forest loss"></div>
-          <figcaption class="desc">
-            Consistently high-loss hotspots appear in West Africa (notably Côte d’Ivoire),<br> parts of Central Africa,
-            and Southeast Asia (Indonesia–Malaysia–Mekong region).
-          </figcaption>
-        </figure>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <h2>First and Second Columns Combined</h2>
+          <p>The first and second columns are combined. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa sapien
+            faucibus et molestie ac feugiat sed. Egestas purus viverra accumsan in nisl.</p>
+        </div>
       </div>
-    </section>
+
+    </div>
 
     <!-- SECTION 2: Primary tree cover loss + description (single column) -->
-    <!-- <h2 class="section-title">Primary Forest Loss</h2> -->
-    <section class="pure-g mb24">
-      <div class="pure-u-1">
-        <figure class="vis-card">
-          <div id="vis3" class="vis-container" aria-label="Bar chart of primary tree cover loss"></div>
-          <figcaption class="desc">
+    <div class="pure-g">
+
+      <div class="pure-u-1-2">
+          <div class="description description-left">
+          <h2>First and Second Columns Combined</h2>
+
           Loss fluctuates around 3–4 million ha in the early 2010s, surges <br>
           to a decade peak in 2016 (~6.2 Mha), remains elevated in 2017 (~5.0 Mha),<br>
           then drops in 2018 (~3.4 Mha).
-          </figcaption>
-        </figure>
+          </div>
       </div>
-    </section>
+
+      <div class="pure-u-1-2">
+        <div id="vis3" class="vis-container" aria-label="Line Chart of primary tree cover loss"></div>
+      </div>
+
+    </div>
 
     <!-- SECTION 3: Loss caused by different drivers + description (single column) -->
     <!-- <h2 class="section-title">Drivers of Forest Loss Over Time</h2> -->
@@ -108,7 +112,7 @@
   <script>
     vegaEmbed('#vis1', "js/donut_global_tree_cover.vg.json", { actions: false }).catch(console.error);
     vegaEmbed('#vis2', "js/pct_forest_loss_choropleth_map.vg.json", { actions: false }).catch(console.error);
-    vegaEmbed('#vis3', "js/bar_chart_primary_tree_loss.vg.json", { actions: false }).catch(console.error);
+    vegaEmbed('#vis3', "js/line_chart_primary_tree_loss.vg.json", { actions: false }).catch(console.error);
     vegaEmbed('#vis4', "js/stacked_area_driver.vg.json", { actions: false }).catch(console.error);
     vegaEmbed('#vis5', "js/horizontal_bar_deforestation_reforestation.vg.json", { actions: false }).catch(console.error);
   </script>
