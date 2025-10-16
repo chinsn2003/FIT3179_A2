@@ -7,6 +7,15 @@
     "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/tree_cover_loss_by_driver.csv",
     "format": {"type": "csv"}
   },
+
+  "params": [
+    {
+      "name": "driverSel",
+      "select": {"type": "point", "fields": ["drivers_type"]},
+      "bind": "legend"
+    }
+  ],
+
   "transform": [
     {"calculate": "toNumber(datum.loss_area_ha)/1e6", "as": "Loss_M"},
     {
@@ -14,21 +23,26 @@
         {"op": "sum", "field": "Loss_M", "as": "driver_total"}
       ],
       "groupby": ["drivers_type"]
-    }
+    },
+    {"filter": {"param": "driverSel"}}
   ],
+
   "mark": {"type": "area"},
+
   "encoding": {
     "x": {"field": "loss_year", "type": "ordinal", "sort": "ascending", "axis": {"title": "Year"}},
     "y": {"aggregate": "sum", "field": "Loss_M", "type": "quantitative", "axis": {"title": "Loss (Mha)"}},
+
     "color": {
       "field": "drivers_type",
       "type": "nominal",
       "title": "Driver",
       "sort": {"field": "driver_total", "op": "sum", "order": "descending"},
-      "legend": {"title": "", "orient": "top-left", "cornerRadius": 6, "padding": 6, "columns":2}
-      
+      "legend": {"title": "", "orient": "top-left", "cornerRadius": 6, "padding": 6, "columns": 2}
     },
+
     "order": {"field": "driver_total", "type": "quantitative", "sort": "descending"},
+
     "tooltip": [
       {"field": "drivers_type", "title": "Driver"},
       {"field": "loss_year", "title": "Year"},
