@@ -1,53 +1,98 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Forest Composition: Primary, Planted, Other Tree Cover, Non-Forest 2020",
-  "width": 300,
-  "height": 150,
+  "description": "Donut of forest composition with center title/year. Small-slice labels are placed outside.",
+  "view": {"stroke": null},
+
   "data": {
-    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/fao_treecover_extent__ha.csv"
+    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/summary_forest_cover_fao_ha.csv",
+    "format": {"type": "csv"}
   },
+
+  "params": [
+    {
+      "name": "yr",
+      "value": 2010,
+      "bind": {"input": "range", "min": 2010, "max": 2020, "step": 5, "name": "Year: "}
+    }
+  ],
+
   "transform": [
-    { "calculate": "isValid(datum['primary_forest__ha']) && datum['primary_forest__ha']!='' ? toNumber(datum['primary_forest__ha']) : 0", "as": "primary" },
-    { "calculate": "isValid(datum['planted_forest__ha']) && datum['planted_forest__ha']!='' ? toNumber(datum['planted_forest__ha']) : 0", "as": "planted" },
-    { "calculate": "isValid(datum['fao_treecover__ha']) && datum['fao_treecover__ha']!='' ? toNumber(datum['fao_treecover__ha']) : 0", "as": "treecover" },
-    { "calculate": "isValid(datum['area_ha']) && datum['area_ha']!='' ? toNumber(datum['area_ha']) : 0", "as": "land" },
-
-    { "calculate": "max(0, datum.treecover - datum.primary - datum.planted)", "as": "other_tree" },
-
-    { "calculate": "max(0, datum.land - datum.treecover)", "as": "non_forest" },
+    {"filter": "datum.year == yr"},
+    {"calculate": "datum.fao_treecover__ha - datum.primary_forest__ha - datum.planted_forest__ha", "as": "other_treecover__ha"},
+    {"calculate": "datum.area_ha - datum.fao_treecover__ha", "as": "non_forest__ha"},
+    {"fold": ["primary_forest__ha","planted_forest__ha","other_treecover__ha","non_forest__ha"], "as": ["key","area"]},
+    {"calculate": "datum.key == 'primary_forest__ha' ? 'Primary Forest' : datum.key == 'planted_forest__ha' ? 'Planted Forest' : datum.key == 'other_treecover__ha' ? 'Other Tree Cover' : 'Non-Forest'", "as": "Type"},
+    {"joinaggregate": [{"op": "sum", "field": "area", "as": "total_area"}]},
+    {"calculate": "datum.area / datum.total_area", "as": "share"},
+    {"calculate": "datum.Type + '\\n' + (round(datum.share*1000)/10) + '%'", "as": "sliceLabel"},
+    {"calculate": "toString(yr)", "as": "yearLabel"},
 
     {
-      "aggregate": [
-        {"op":"sum","field":"primary","as":"PRI"},
-        {"op":"sum","field":"planted","as":"PLA"},
-        {"op":"sum","field":"other_tree","as":"OTH"},
-        {"op":"sum","field":"non_forest","as":"NFL"}
-      ]
+      "window": [{"op": "sum", "field": "share", "as": "cumShare"}],
+      "sort": [{"field": "share", "order": "descending"}],
+      "frame": [null, 0]
     },
-
-    { "fold": ["PRI","PLA","OTH","NFL"], "as": ["key","area"] },
-
-    { "calculate": "({'PRI':'Primary Forest','PLA':'Planted Forest','OTH':'Other Tree Cover','NFL':'Non-Forest'})[datum.key]", "as": "typeLabel" },
-    { "joinaggregate": [{"op":"sum","field":"area","as":"total_area"}] },
-    { "calculate": "datum.total_area>0 ? 100*datum.area/datum.total_area : null", "as": "pct" }
+    {"calculate": "6.283185307179586 * (datum.cumShare - datum.share)", "as": "startAngle"},
+    {"calculate": "6.283185307179586 * datum.cumShare", "as": "endAngle"},
+    {"calculate": "(datum.startAngle + datum.endAngle)/2", "as": "midAngle"}
   ],
-  "mark": { "type": "arc", "innerRadius": 90, "outerRadius": 160 },
-  "encoding": {
-    "theta": { "field": "area", "type": "quantitative" },
-    "color": {
-      "field": "typeLabel",
-      "type": "nominal",
-      "title": "Type",
-      "scale": {
-        "domain": ["Primary Forest","Planted Forest","Other Tree Cover","Non-Forest"],
-        "range": ["#16a34a","#3b82f6","#f59e0b","#d1d5db"]
+
+  "width": 420,
+  "height": 360,
+
+  "layer": [
+    {
+      "mark": {"type": "arc", "innerRadius": 90, "outerRadius": 160, "stroke": "white", "strokeWidth": 1},
+      "encoding": {
+        "theta": {"field": "startAngle", "type": "quantitative"},
+        "theta2": {"field": "endAngle"},
+        "detail": {"field": "Type"},
+        "color": {
+          "field": "Type",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": ["Primary Forest", "Planted Forest", "Other Tree Cover", "Non-Forest"],
+            "range": ["#2ca02c", "#1f77b4", "#f39c12", "#d5d9df"]
+          }
+        },
+        "tooltip": [
+          {"field": "Type", "title": "Type"},
+          {"field": "area", "title": "Area (ha)", "format": ","},
+          {"field": "share", "title": "Share", "format": ".1%"}
+        ]
       }
     },
-    "order": { "field": "area", "type": "quantitative", "sort": "descending" },
-    "tooltip": [
-      { "field": "typeLabel", "type": "nominal", "title": "Type" },
-      { "field": "area", "type": "quantitative", "title": "Area (ha)", "format": ",.0f" },
-      { "field": "pct", "type": "quantitative", "title": "Share (%)", "format": ".1f" }
-    ]
-  }
+
+    {
+      "mark": {"type": "text", "radius": 125, "fontSize": 12, "align": "center", "baseline": "middle", "lineBreak": "\n"},
+      "encoding": {
+        "theta": {"field": "midAngle", "type": "quantitative"},
+        "detail": {"field": "Type"},
+        "text": {"field": "sliceLabel"},
+        "opacity": {"condition": {"test": "datum.share >= 0.06", "value": 1}, "value": 0},
+        "color": {"value": "#000"}
+      }
+    },
+
+    {
+      "mark": {"type": "text", "radius": 178, "fontSize": 12, "baseline": "middle", "lineBreak": "\n"},
+      "encoding": {
+        "theta": {"field": "midAngle", "type": "quantitative"},
+        "detail": {"field": "Type"},
+        "text": {"field": "sliceLabel"},
+        "opacity": {"condition": {"test": "datum.share < 0.06", "value": 1}, "value": 0},
+        "color": {"value": "#000"}
+      }
+    },
+
+    {
+      "mark": {"type": "text", "align": "center", "baseline": "bottom", "fontSize": 16},
+      "encoding": {"x": {"value": 210}, "y": {"value": 180}, "text": {"value": "Forest Composition"}}
+    },
+    {
+      "mark": {"type": "text", "align": "center", "baseline": "top", "dy": 6, "fontSize": 13, "fill": "#555"},
+      "encoding": {"x": {"value": 210}, "y": {"value": 180}, "text": {"aggregate": "max", "field": "yearLabel"}}
+    }
+  ]
 }
