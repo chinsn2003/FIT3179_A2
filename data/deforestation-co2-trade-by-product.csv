@@ -1,4 +1,4 @@
-Entity,Code,Year,Cattle Meat,Oilseed Products,Other Crops,Rice,Vegetable/Fruits/Nuts,Wheat,Sugar,Plant Fibres,Other Meat Products,Other Cereals
+Entity,Code,Year,cattle_meat,oilseed_products,other_crops,rice,veg_fruits_nuts,wheat,sugar,plant_fibres,other_meat_products,other_cereals
 Australia,AUS,2013,1767338.297,4969793.6,873074.7564,879389.0706,1175708.595,41496.59453,152323.3059,101078.2282,0,89034.20738
 Austria,AUT,2013,750326.2634,959211.8081,226532.917,184118.4218,392507.1735,15495.06354,33453.3161,24966.58559,0,30146.19966
 Belgium,BEL,2013,1666691.483,4135304.798,1082828.034,458813.42,1633892.461,50684.96248,85687.04013,106014.5491,0,86200.37873
