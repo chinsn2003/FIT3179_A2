@@ -1,37 +1,77 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Primary Forest — Annual Loss (Mha) vs Remaining (% of 2010)",
   "width": "container",
   "height": 350,
-  "title": "Primary Forest Loss",
   "data": {
     "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/treecover_loss_in_primary_forests_2001_tropics_only__ha.csv"
   },
   "transform": [
-    { "calculate": "toNumber(datum.umd_tree_cover_loss__ha)/1e6", "as": "loss" },
-    { "calculate": "toNumber(datum.umd_tree_cover_loss__year)", "as": "year" },
-    {"filter": "datum.year>= 2010 && datum.year<=2020"},
-    { "filter": "isFinite(datum.loss) && datum.loss >= 0 && isFinite(datum.year)" },
-
-    { "aggregate": [{"op": "sum", "field": "loss", "as": "sumLoss"}],
-      "groupby": ["year"] }
+    {"calculate": "toNumber(datum.umd_tree_cover_loss__ha)/1e6", "as": "loss"},
+    {"calculate": "toNumber(datum.umd_tree_cover_loss__year)", "as": "year"},
+    {"filter": "datum.year >= 2010 && datum.year <= 2020"},
+    {"filter": "isFinite(datum.loss) && datum.loss >= 0 && isFinite(datum.year)"},
+    {"aggregate": [{"op": "sum", "field": "loss", "as": "sumLoss"}], "groupby": ["year"]},
+    {"window": [{"op": "sum", "field": "sumLoss", "as": "cumLoss"}],
+     "sort": [{"field": "year", "order": "ascending"}]},
+    {"calculate": "1112.53482", "as": "baselineMha"},
+    {"calculate": "datum.baselineMha - datum.cumLoss", "as": "remainingMha"},
+    {"calculate": "datum.remainingMha / datum.baselineMha", "as": "remainingPct"}
   ],
-  "mark": {"type": "line", "point": true, "color": "#16a34a", "strokeWidth": 3},
-  "encoding": {
-    "x": { "field": "year", "type": "ordinal", "title": "Year", "sort": "ascending"},
-    "y": {
-      "field": "sumLoss",
-      "type": "quantitative",
-      "title": "Tree cover loss (million ha)",
-      "stack": true,
-      "axis": { "format": ",.0f" }
+  "layer": [
+    {
+      "transform": [{"calculate": "'Primary forest loss (Mha)'", "as": "series"}],
+      "mark": {"type": "line", "point": true, "strokeWidth": 3},
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal", "title": "Year"},
+        "y": {"field": "sumLoss", "type": "quantitative", "title": "Primary forest loss (million ha)", "axis": {"format": ",.0f"}},
+        "color": {
+          "field": "series",
+          "type": "nominal",
+          "legend": {
+              "title": "",
+              "orient": "bottom-right",
+              "fillColor": "white",
+              "cornerRadius": 6,
+              "padding": 6
+            },
+
+          "scale": {"domain": ["Primary forest loss (Mha)", "Remaining (% of 2010)"],
+                    "range": ["#22c55e", "#2f6b2f"]}
+        },
+        "tooltip": [
+          {"field": "year", "type": "ordinal", "title": "Year"},
+          {"field": "remainingPct", "type": "quantitative", "title": "Primary forest extent remaining", "format": ".1%"},
+          {"field": "sumLoss", "type": "quantitative", "title": "Primary forest loss (Mha)", "format": ",.2f"}
+        ]
+      }
     },
-    "tooltip": [
-      { "field": "year", "type": "ordinal", "title": "Year" },
-      { "field": "sumLoss", "type": "quantitative", "title": "Loss (million ha)", "format": ",.2f" }
-    ]
-  },
-  "config": {
-    "axis": { "labelFontSize": 12, "titleFontSize": 12 },
-    "legend": { "labelFontSize": 12, "titleFontSize": 12 }
-  }
+    {
+      "transform": [{"calculate": "'Remaining (% of 2010)'", "as": "series"}],
+      "mark": {"type": "line", "strokeDash": [4,4], "strokeWidth": 2, "point": {"filled": true}},
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal"},
+        "y": {"field": "remainingPct", "type": "quantitative", "title": "Remaining primary forest (% of 2010)", "axis": {"orient": "right", "format": ".0%"}},
+        "color": {
+          "field": "series",
+          "type": "nominal",
+            "legend": {
+              "title": "",
+              "orient": "bottom-right",
+              "fillColor": "white",
+              "cornerRadius": 6,
+              "padding": 6
+            },
+          "scale": {"domain": ["Primary forest loss (Mha)", "Remaining (% of 2010)"],
+                    "range": ["#22c55e", "#2f6b2f"]}
+        },
+        "tooltip": [
+          {"field": "year", "type": "ordinal", "title": "Year"},
+          {"field": "remainingPct", "type": "quantitative", "title": "Primary forest extent remaining", "format": ".1%"},
+          {"field": "sumLoss", "type": "quantitative", "title": "Primary forest loss (Mha)", "format": ",.2f"}
+        ]
+      }
+    }
+  ],
+  "resolve": {"scale": {"y": "independent"}}
 }
