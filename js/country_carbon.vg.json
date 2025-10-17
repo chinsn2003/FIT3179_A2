@@ -1,0 +1,103 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Per-country CO₂ from deforestation embodied in trade (2013) by Continent",
+  "width": "container",
+  "height": 460,
+  "data": {
+    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/country_carbon.csv",
+    "format": {"type": "csv"}
+  },
+
+  "params": [
+    {
+      "name": "pCont_stack",
+      "value": "Asia",
+      "bind": {
+        "input": "select",
+        "name": "Continent: ",
+        "options": ["All","Africa","Americas","Asia","Europe","Oceania"]      }
+    }
+  ],
+
+  "transform": [
+    {
+      "fold": [
+        "gfw_forest_carbon_gross_emissions_2010__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2011__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2012__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2013__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2014__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2015__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2016__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2017__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2018__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2019__Mg_CO2e",
+        "gfw_forest_carbon_gross_emissions_2020__Mg_CO2e"
+      ],
+      "as": ["year_col","val_Mg"]
+    },
+    {"calculate": "toNumber(datum.val_Mg)", "as": "valMg"},
+    {"filter": "isFinite(datum.valMg)"},
+    {
+      "calculate": "toNumber(replace(replace(datum.year_col,'gfw_forest_carbon_gross_emissions_',''),'__Mg_CO2e',''))",
+      "as": "yearN"
+    },
+    {"calculate": "datum.valMg/1e6", "as": "emissions_Mt"},
+
+    {"filter": "pCont_stack == 'All' || datum.continent == pCont_stack"},
+
+    {
+      "aggregate": [
+        {"op": "sum", "field": "emissions_Mt", "as": "emissions_sum_Mt"}
+      ],
+      "groupby": ["continent","country","yearN"]
+    },
+
+    {
+      "joinaggregate": [
+        {"op": "sum", "field": "emissions_sum_Mt", "as": "country_total_Mt"}
+      ],
+      "groupby": ["country","continent"]
+    },
+
+    {
+      "calculate": "datum.emissions_sum_Mt >= 120 ? datum.country : 'Other'",
+      "as": "groupCountry"
+    },
+
+    {
+      "calculate": "datum.groupCountry === 'Other' ? 1e12 : -datum.country_total_Mt",
+      "as": "orderKey"
+    }
+  ],
+
+  "mark": {"type": "bar"},
+
+  "encoding": {
+    "x": {"field": "yearN", "type": "ordinal", "sort": "ascending", "axis": {"title": "Year"}},
+    "y": {
+      "aggregate": "sum",
+      "field": "emissions_sum_Mt",
+      "type": "quantitative",
+      "axis": {"title": "Gross carbon emissions (MtCO₂e)", "format": ",.0f"}
+    },
+    "color": {
+      "field": "groupCountry",
+      "type": "nominal",
+      "title": "Country",
+      "sort": {"op": "sum", "field": "emissions_sum_Mt", "order": "descending"},
+      "scale": {"scheme": "tableau20"}
+    },
+    "order": {
+      "aggregate": "min",
+      "field": "orderKey",
+      "type": "quantitative",
+      "sort": "ascending"
+    },
+    "tooltip": [
+      {"field": "yearN", "title": "Year"},
+      {"field": "groupCountry", "title": "Country"},
+      {"aggregate": "sum", "field": "emissions_sum_Mt", "title": "Emissions (MtCO₂e)", "format": ",.2f"}
+    ]
+  }
+}

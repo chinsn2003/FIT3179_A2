@@ -1,14 +1,14 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Annual Tree Cover Loss per Forest Area (%)",
+  "title": {"text":"Annual Tree Cover Loss per Forest Area (%)", "fontSize": 25},
   "width": "container",
-  "height": 350,
+  "height": 420,
   "projection": {"type": "equalEarth"},
   "params": [
     {
       "name": "YearSel",
       "value": 2010,
-      "bind": { "input": "range", "min": 2010, "max": 2020, "step": 1, "name": "Year: " }
+      "bind": { "input": "range", "min": 2010, "max": 2020, "step": 1, "name": "Year: ","element": "#map-year-controls" }
     }
   ],
 
@@ -72,12 +72,23 @@
       "encoding": {
         "shape": {"field": "geo", "type": "geojson"},
         "color": {
-          "field": "pct_loss_forest",
-          "type": "quantitative",
+        "field": "pct_loss_forest",
+        "type": "quantitative",
+        "legend": {
           "title": "Loss per forest area (%)",
-          "legend": {"format": ".1f"},
-          "scale": {"type": "threshold", "domain": [0.5,1,3,6], "range": ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"]}
-        },
+          "format": ".1f",
+          "titleLineHeight": 12,
+          "titlePadding": 4,
+          "direction": "horizontal",
+          "orient": "bottom", 
+          "labelAlign": "center","titleAnchor": "middle","columns": 4},
+
+        "scale": {
+          "type": "threshold",
+          "domain": [0.5, 1.5, 3, 6],
+          "range": ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"]
+        }
+      },
         "tooltip": [
           {"field": "Country Name", "type": "nominal", "title": "Country"},
           {"field": "yearNum", "type": "quantitative", "title": "Year"},

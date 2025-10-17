@@ -69,3 +69,8 @@ h1 {
 .vis1, .vis2 , .vis3 , .vis4 , .vis5 {
   width: 100%;
 }
+
+#year-controls{
+  text-align: center;
+}
+

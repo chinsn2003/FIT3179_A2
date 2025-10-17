@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {"text": "Loss caused by different drivers over Time"},
-  "width": 800,
+  "width": "container",
   "height": 420,
   "data": {
     "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/tree_cover_loss_by_driver.csv",
@@ -13,26 +13,12 @@
       "name": "driverSel",
       "select": {"type": "point", "fields": ["drivers_type"]},
       "bind": "legend"
-    },
-    {
-      "name": "metric",
-      "value": "loss",                     
-      "bind": {
-        "input": "select",
-        "name": "Metric:",
-        "options": ["loss", "emissions"],
-        "labels": ["Forest loss (Mha)", "Gross carbon emissions (Mt)"]
-      }
     }
   ],
 
   "transform": [
     {"calculate": "toNumber(datum.loss_area_ha)/1e6", "as": "Loss_M"},
     {"calculate": "toNumber(datum.gross_carbon_emissions_Mg)/1e6", "as": "Emissions_Mt"},
-    {
-      "calculate": "metric == 'loss' ? datum.Loss_M : datum.Emissions_Mt",
-      "as": "yValue"
-    },
     {
       "joinaggregate": [
         {"op": "sum", "field": "Loss_M", "as": "driver_total"}  
@@ -48,7 +34,7 @@
     "x": {"field": "loss_year", "type": "ordinal", "sort": "ascending", "axis": {"title": "Year"}},
     "y": {
       "aggregate": "sum",
-      "field": "yValue",
+      "field": "Loss_M",
       "type": "quantitative",
       "axis": {
         "title": "Loss (Mha) / Gross carbon emissions (Mt)"
@@ -59,7 +45,7 @@
       "type": "nominal",
       "title": "Driver",
       "sort": {"field": "driver_total", "op": "sum", "order": "descending"},
-      "legend": {"title": "", "orient": "top-left", "cornerRadius": 6, "padding": 6, "columns": 2}
+      "legend": {"title": "", "orient": "top-left", "labelFontSize": 10,"columns": 2}
     },
     "order": {"field": "driver_total", "type": "quantitative", "sort": "descending"},
     "tooltip": [
@@ -67,8 +53,8 @@
       {"field": "loss_year", "title": "Year"},
       {
         "aggregate": "sum",
-        "field": "yValue",
-        "title": "Loss (Mha) / Emissions (Mt)",
+        "field": "Loss_M",
+        "title": "Loss (Mha)",
         "format": ".2f"
       }
     ]

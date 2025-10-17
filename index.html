@@ -24,23 +24,34 @@
     <p class="subtitle">Overview of forest extent, spatial loss rates, temporal drivers, and net change.</p>
 
     <div class="pure-g">
-      <div class="pure-u-2-3">
+
+      <div class="pure-u-1-2" >
         <div id="vis1" class="vis-container"></div>
+        <div id="year-controls"></div>
       </div>
 
-      <div class="pure-u-1-3">
+      <div class="pure-u-1-2">
         <div class="description description-right">
           <h2>What is the World Made Of?</h2>
 
-          <p>Loss fluctuates around 3–4 million ha in the early 2010s, surges 
-          to a decade peak in 2016 (~6.2 Mha), remains elevated in 2017 (~5.0 Mha),
-          then drops in 2018 (~3.4 Mha).</p>
+          <p>The first and second columns are combined. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa sapien
+            faucibus et molestie ac feugiat sed. Egestas purus viverra accumsan in nisl</p>
         </div>
       </div>
+
+
+    </div>
+
+    <div class="pure-g"> 
+
+      <div class="pure-u-1-1">
+          <div id="vis2" class="vis-container"></div>   
+        </div>
+        
     </div>
 
 
-    <div id="vis2" class="vis-container"></div>
 
     <!-- donut + description -->
 
@@ -80,21 +91,57 @@
 
     </div>
 
-    <!-- SECTION 3: Loss caused by different drivers + description (single column) -->
-    <div class="pure-g ">
-      <div class="pure-u-3-5">
-          <div id="vis4" class="vis-container" aria-label="Stacked area chart for drivers of forest loss over time"></div>
-      </div>
-      <div class="pure-u-2-5">
+    <!-- SECTION 4: Description + Reforestation/Net change bar (two columns) -->
+      <div class="pure-g">
+        <div class="pure-u-3-5">
+          <div id="vis5" class="vis-container"></div>
+        </div>
+        <div class="pure-u-2-5">
             <div class="description description-right">
             <h2>First and Second Columns Combined</h2>
+            Top ten countries by gross forest loss are led by Russia and Brazil, with Canada and the United States following. 
+            Most countries show reforestation activity that is far smaller than their deforestation , indicating net losses overall.
+
+            </div>
+        </div>
+
+
+
+      </div>
+
+    <!-- SECTION 3: Loss caused by different drivers + description (single column) -->
+    <div class="pure-g ">
+      <div class="pure-u-1-2">
+          <div id="vis4" class="vis-container" aria-label="Stacked area chart for drivers of forest loss over time"></div>
+      </div>
+      <div class="pure-u-1-2">
+            <div class="description description-right">
+            <!-- <h2>First and Second Columns Combined</h2>
             <p>Permanent agriculture is the largest, most persistent driver, shaping the overall 
             pattern and the 2016–2017 peak. Wildfire shows surges—notably in 2016 and again by 
-            2020—pushing totals up in those years. </p>
+            2020—pushing totals up in those years. </p> -->
+          <div id="vis7" class="vis-container" aria-label="Stacked area chart for drivers of forest loss over time"></div>
+
       </div>
     </div>
     
-    
+    <div class="pure-g">
+
+      <div class="pure-u-2-5">
+          <div class="description description-left">
+          <h2>First and Second Columns Combined</h2>
+
+          <p>Loss fluctuates around 3–4 million ha in the early 2010s, surges 
+          to a decade peak in 2016 (~6.2 Mha), remains elevated in 2017 (~5.0 Mha),
+          then drops in 2018 (~3.4 Mha).</p>
+          </div>
+      </div>
+
+      <div class="pure-u-3-5">
+        <div id="vis6" class="vis-container"></div>
+      </div>
+
+    </div>
     <!-- SECTION 4: Description + Reforestation/Net change bar (two columns) -->
 
     <div class="pure-g">
@@ -109,17 +156,23 @@
       </div>
 
       <div class="pure-u-3-5">
-        <div id="vis5" class="vis-container" aria-label="Line Chart of primary tree cover loss"></div>
+        <div id="vis8" class="vis-container"></div>
       </div>
 
     </div>
 
-    <footer>
-      <p class="small">
-        Visualisation by Sze-Ning Chin. Data sources: Global Forest Watch.
-      </p>
-    </footer>
+
+   </div>
+
+  
   </div>
+
+    <footer>
+    <p class="small">
+      Visualisation by Sze-Ning Chin. Data sources: Global Forest Watch.
+    </p>
+  </footer>
+  
 
   <!-- Vega embeds -->
   <script>
@@ -128,6 +181,10 @@
     vegaEmbed('#vis3', "js/line_chart_primary_tree_loss.vg.json", { actions: false }).catch(console.error);
     vegaEmbed('#vis4', "js/stacked_area_driver.vg.json", { actions: false }).catch(console.error);
     vegaEmbed('#vis5', "js/horizontal_bar_deforestation_reforestation.vg.json", { actions: false }).catch(console.error);
+    vegaEmbed('#vis6', "js/radial_chart_agriculture.vg.json", { actions: false }).catch(console.error);
+    vegaEmbed('#vis7', "js/bar_chart_country_drivers.vg.json", { actions: false }).catch(console.error);
+    vegaEmbed('#vis8', "js/country_carbon.vg.json", { actions: false }).catch(console.error);
+
   </script>
 </body>
 </html>

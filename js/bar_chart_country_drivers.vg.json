@@ -1,0 +1,56 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title":  "Drivers by Country (Top 10) for Selected Year and Driver: Tree-cover loss (ha)",
+  "width":"container",
+  "height": 420,
+  "data": {
+    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/country_drivers.csv",
+    "format": {"type": "csv"}
+  },
+
+  "params": [
+    {
+      "name": "pYear",
+      "value": 2010,
+      "bind": {"input": "range", "min": 2010, "max": 2020, "step": 1, "name": "Year: "}
+    },
+    {
+      "name": "pDriver",
+      "value": "Logging",
+      "bind": {
+        "input": "select",
+        "name": "Driver: ",
+        "options": ["Logging","Hard commodities","Shifting cultivation","Wildfire","Permanent agriculture","Settlements & Infrastructure","Other natural disturbances"]
+      }
+    }
+  ],
+
+  "transform": [
+    {"calculate": "toNumber(datum.year)", "as": "yearN"},
+    {"calculate": "toNumber(datum.tc_loss_ha)", "as": "loss"},
+    {"filter": "isFinite(datum.loss) && datum.yearN == pYear && datum.driver == pDriver"},
+    {"aggregate": [{"op": "sum", "field": "loss", "as": "loss_sum"}], "groupby": ["country"]},
+    {"calculate": "abs(datum.loss_sum)", "as": "absLoss"},
+    {"window": [{"op": "rank", "as": "rk"}], "sort": [{"field": "absLoss", "order": "descending"}]},
+    {"filter": "datum.rk <= 10"}
+  ],
+
+  "mark": {"type": "bar"},
+  "encoding": {
+    "y": {
+      "field": "country",
+      "type": "nominal",
+      "sort": {"field": "loss_sum", "order": "descending"},
+      "title": null
+    },
+    "x": {
+      "field": "loss_sum",
+      "type": "quantitative",
+      "axis": {"title": "Tree-cover loss (ha)", "format": ",.0f"}
+    },
+    "color": {"value": "#2b7bba"},
+    "tooltip": [
+      {"field": "country", "title": "Country"},
+      {"field": "loss_sum", "title": "Loss (ha)", "format": ",.0f"}
+    ]
+  }}
