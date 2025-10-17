@@ -82,8 +82,7 @@
           { "field": "loss", "title": "Loss (ha)", "format": ",.0f" },
           { "field": "gain", "title": "Gain (ha)", "format": ",.0f" },
           { "field": "net",  "title": "Net (ha)",  "format": ",.0f" }
-        ]
-      }
+        ]      }
     },
     {
       "mark": { "type": "bar" },

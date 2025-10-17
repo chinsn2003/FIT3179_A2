@@ -74,3 +74,7 @@ h1 {
   text-align: center;
 }
 
+#concat-year-controls{
+  text-align: right;
+  margin-right: 150px;
+}

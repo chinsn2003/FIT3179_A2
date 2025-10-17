@@ -46,7 +46,7 @@
     <div class="pure-g"> 
 
       <div class="pure-u-1-1">
-          <div id="vis2" class="vis-container"></div>   
+          <div id="vis2" class="vis-container"></div>  
         </div>
         
     </div>
@@ -86,12 +86,12 @@
       </div>
 
       <div class="pure-u-3-5">
-        <div id="vis3" class="vis-container" aria-label="Line Chart of primary tree cover loss"></div>
+        <div id="vis3" class="vis-container"></div>
       </div>
 
     </div>
 
-    <!-- SECTION 4: Description + Reforestation/Net change bar (two columns) -->
+    <!-- SECTION 3: Description + Reforestation/Net change bar (two columns) -->
       <div class="pure-g">
         <div class="pure-u-3-5">
           <div id="vis5" class="vis-container"></div>
@@ -105,27 +105,22 @@
             </div>
         </div>
 
-
-
       </div>
 
-    <!-- SECTION 3: Loss caused by different drivers + description (single column) -->
-    <div class="pure-g ">
-      <div class="pure-u-1-2">
-          <div id="vis4" class="vis-container" aria-label="Stacked area chart for drivers of forest loss over time"></div>
-      </div>
-      <div class="pure-u-1-2">
-            <div class="description description-right">
-            <!-- <h2>First and Second Columns Combined</h2>
-            <p>Permanent agriculture is the largest, most persistent driver, shaping the overall 
-            pattern and the 2016–2017 peak. Wildfire shows surges—notably in 2016 and again by 
-            2020—pushing totals up in those years. </p> -->
-          <div id="vis7" class="vis-container" aria-label="Stacked area chart for drivers of forest loss over time"></div>
+    <!-- SECTION 4: Loss caused by different drivers + description (single column) -->
 
-      </div>
+    <div class="pure-g"> 
+
+      <div class="pure-u-1-1">
+        <div id="vis9" class="vis-container"></div>
+        <div id="concat-year-controls"></div> 
+
+        </div>
+        
     </div>
+
     
-    <div class="pure-g">
+    <!-- <div class="pure-g">
 
       <div class="pure-u-2-5">
           <div class="description description-left">
@@ -141,7 +136,7 @@
         <div id="vis6" class="vis-container"></div>
       </div>
 
-    </div>
+    </div> -->
     <!-- SECTION 4: Description + Reforestation/Net change bar (two columns) -->
 
     <div class="pure-g">
@@ -164,7 +159,7 @@
 
    </div>
 
-  
+
   </div>
 
     <footer>
@@ -184,6 +179,7 @@
     vegaEmbed('#vis6', "js/radial_chart_agriculture.vg.json", { actions: false }).catch(console.error);
     vegaEmbed('#vis7', "js/bar_chart_country_drivers.vg.json", { actions: false }).catch(console.error);
     vegaEmbed('#vis8', "js/country_carbon.vg.json", { actions: false }).catch(console.error);
+    vegaEmbed('#vis9', "js/concat_drivers.vg.json", { actions: false }).catch(console.error);
 
   </script>
 </body>
