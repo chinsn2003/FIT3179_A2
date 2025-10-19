@@ -46,7 +46,9 @@
           "type": "nominal",
           "title": "Driver",
           "sort": {"field": "driver_total", "op": "sum", "order": "descending"},
-          "legend": {"title": "", "orient": "top-left", "labelFontSize": 10, "columns": 2}
+          "legend": {"title": "", "orient": "top-left", "labelFontSize": 10, "columns": 2},
+          "scale": { "range": ["#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7"] }
+
         },
         "order": {
           "field": "driver_total",
