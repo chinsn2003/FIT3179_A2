@@ -1,81 +1,138 @@
-:body *{
-  font-family: 'Open Sans', sans-serif;
+:root {
+  --card-border: #e5e7eb; /* light gray for borders */
 }
 
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: rgb(67, 97, 73);
+  font-family: Arial, Helvetica, sans-serif;
+  color: #0f172a;
+}
+
+
+/* Headings */
 h1 {
   font-size: 45px;
   font-weight: 900;
   text-align: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin: 0;
 }
-
 
 h2 {
-  font-size: 30px;
-  font-weight: 700;
-  text-align: center;
+  font-size: 28px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-body {
-  background-color: 
-  rgb(67, 97, 73);
+h3 {
+  font-size: 20px;
+  margin: 0;
 }
 
-.description{
-  font-size: 18px;
-  line-height: 1.6;
-}
 .subtitle {
   text-align: center;
   font-size: 18px;
-  margin-top: -20px;
+  color: #0f172a;
 }
 
+/* Page container */
 .page {
-  width: 1000px;
-  background-color: white;
-  margin: auto;
-  padding: 50px;
-  padding-top: 35px;
+  width: 1200px;
+  max-width: 95vw;
+  margin: 0 auto;
+  padding: 35px 16px 50px;
 }
 
-.vis-container {
-  width: 100%;
-  height: 100%;
-
+/* Cards / boxes */
+.box {
+  background-color: #f7fafb;
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 5px;
+  box-shadow: 0 8px 20px rgba(7, 37, 46, .06);
+  overflow: hidden; /* keep charts inside the card */
 }
 
-.description h2,
-h1 {
-  margin-top: 0px;
+.header-box {
+  background-color: #f7fafb;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 5px 5px 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .05);
 }
 
-.description-right {
-  padding-left: 20px;
+/* Decorative block next to H2 */
+.deco-block {
+  width: 8px;
+  height: 22px;
+  border-radius: 4px;
+  background: rgb(9, 74, 47);
+  display: inline-block;
 }
 
-.description-left {
-  padding-right: 20px;
-}
-
-.pure-g {
+/* Grid spacing (Pure.css rows) */
+/* .pure-g {
   margin-top: 40px;
   margin-bottom: 40px;
+} */
+
+/* Descriptions */
+.description {
+  font-size: 20px;
+  line-height: 1.6;
 }
 
-.small-font {
-  font-size: 14px;
+.description-right { padding: 20px; }
+.description-left  { padding: 20px; }
+
+.small-font { font-size: 14px; }
+
+/* Visualization containers — responsive fit */
+.vis-container { width: 100%; /* height set by the Vega spec */ }
+
+/* Ensure vega-embed wrapper fills the card width */
+.vis-container > .vega-embed,
+.vis-container > .vega-embed > div {
+  width: 100% !important;
 }
 
-.vis1, .vis2 , .vis3 , .vis4 , .vis5 {
+/* Prevent SVG/canvas overflow */
+.vis-container svg,
+.vis-container canvas {
+  max-width: 100% !important;
+  height: auto;
+  display: block;
+}
+
+/* Controls alignment */
+#year-controls { text-align: center; }
+#concat-year-controls { text-align: right; margin-right: 150px; }
+
+/* Equal-height helper (apply only to rows with .equal-row) */
+.pure-g.equal-row { align-items: stretch; }  /* stretch columns to tallest */
+.pure-g.equal-row > [class*="pure-u-"] { display: flex; } /* pass height down */
+.pure-g.equal-row .box {
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
-
-#year-controls{
-  text-align: center;
+.pure-g.equal-row .description {
+  display: flex;
+  flex-direction: column;
+  flex: 1;              /* fill card height */
+}
+.pure-g.equal-row .vis-container {
+  flex: 1;              /* let chart area grow inside the card */
 }
 
-#concat-year-controls{
-  text-align: right;
-  margin-right: 150px;
+section{
+  margin-top: 40px;
+  margin-bottom: 40px;
 }

@@ -16,8 +16,8 @@
 
   "hconcat": [{
       "title": {"text": "Loss caused by different drivers over time"},
-      "width": 400,
-      "height": 420,
+      "width": 500,
+      "height": 450,
       "data": {
         "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/tree_cover_loss_by_driver.csv",
         "format": {"type": "csv"}
@@ -62,8 +62,8 @@
       
     {
       "title": "Drivers by Country (Top 10) — Selected Year & Driver: Tree-cover loss (ha)",
-      "width": 400,
-      "height": 420,
+      "width": 500,
+      "height": 450,
       "data": {
         "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/country_drivers.csv",
         "format": {"type": "csv"}

@@ -8,179 +8,251 @@
   <!-- Pure.css -->
   <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
     integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
-
   <link rel="stylesheet" href="css/styles.css">
   <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
+  
 </head>
 
 <body>
   <div class="page">
-    <!-- Header -->
-    <h1>Global Forest Change, 2010–2020</h1>
-    <p class="subtitle">Overview of forest extent, spatial loss rates, temporal drivers, and net change.</p>
-
-    <div class="pure-g">
-
-      <div class="pure-u-1-2" >
-        <div id="vis1" class="vis-container"></div>
-        <div id="year-controls"></div>
-      </div>
-
-      <div class="pure-u-1-2">
-        <div class="description description-right">
-          <h2>What is the World Made Of?</h2>
-
-          <p>The first and second columns are combined. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa sapien
-            faucibus et molestie ac feugiat sed. Egestas purus viverra accumsan in nisl</p>
-        </div>
-      </div>
-
-
+    <!-- Top header -->
+    <div class="box">
+      <h1>Global Forest Change, 2010–2020</h1>
+      <p class="subtitle">Overview of forest extent, spatial loss rates, temporal drivers, and net change.</p>
     </div>
-
-    <div class="pure-g"> 
-
-      <div class="pure-u-1-1">
-          <div id="vis2" class="vis-container"></div>  
-        </div>
-        
-    </div>
-
-
-
-    <!-- donut + description -->
-
-    <!-- <div class="pure-g">
-
-      <div class="pure-u-1-2">
-        <div id="vis1" class="vis-container"></div>
-      </div>
-
-      <div class="pure-u-1-2">
-        <div class="description description-right">
-          <h2>First and Second Columns Combined</h2>
-          <p>The first and second columns are combined. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa sapien
-            faucibus et molestie ac feugiat sed. Egestas purus viverra accumsan in nisl.</p>
-        </div>
-      </div>
-
-    </div> -->
-
-    <!-- SECTION 2: Primary tree cover loss + description (single column) -->
-    <div class="pure-g">
-
-      <div class="pure-u-2-5">
-          <div class="description description-left">
-          <h2>First and Second Columns Combined</h2>
-
-          <p>Loss fluctuates around 3–4 million ha in the early 2010s, surges 
-          to a decade peak in 2016 (~6.2 Mha), remains elevated in 2017 (~5.0 Mha),
-          then drops in 2018 (~3.4 Mha).</p>
-          </div>
-      </div>
-
-      <div class="pure-u-3-5">
-        <div id="vis3" class="vis-container"></div>
-      </div>
-
-    </div>
-
-    <!-- SECTION 3: Description + Reforestation/Net change bar (two columns) -->
-      <div class="pure-g">
-        <div class="pure-u-3-5">
-          <div id="vis5" class="vis-container"></div>
-        </div>
-        <div class="pure-u-2-5">
-            <div class="description description-right">
-            <h2>First and Second Columns Combined</h2>
-            Top ten countries by gross forest loss are led by Russia and Brazil, with Canada and the United States following. 
-            Most countries show reforestation activity that is far smaller than their deforestation , indicating net losses overall.
-
-            </div>
-        </div>
-
-      </div>
-
-    <!-- SECTION 4: Loss caused by different drivers + description (single column) -->
-
-    <div class="pure-g"> 
-
-      <div class="pure-u-1-1">
-        <div id="vis9" class="vis-container"></div>
-        <div id="concat-year-controls"></div> 
-
-        </div>
-        
-    </div>
-
     
-    <!-- <div class="pure-g">
-
-      <div class="pure-u-2-5">
-          <div class="description description-left">
-          <h2>First and Second Columns Combined</h2>
-
-          <p>Loss fluctuates around 3–4 million ha in the early 2010s, surges 
-          to a decade peak in 2016 (~6.2 Mha), remains elevated in 2017 (~5.0 Mha),
-          then drops in 2018 (~3.4 Mha).</p>
+    <section>
+      <!-- SECTION: What is the World Made Of? -->
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <div class="box header-box">
+            <h2><span class="deco-block"></span> What is the World Made Of?</h2>
+            <div class="section-description"></div>
           </div>
+        </div>
       </div>
 
-      <div class="pure-u-3-5">
-        <div id="vis6" class="vis-container"></div>
-      </div>
-
-    </div> -->
-    <!-- SECTION 4: Description + Reforestation/Net change bar (two columns) -->
-
-    <div class="pure-g">
-
-      <div class="pure-u-2-5">
-          <div class="description description-left">
-          <h2>First and Second Columns Combined</h2>
-          Top ten countries by gross forest loss are led by Russia and Brazil, with Canada and the United States following. 
-          Most countries show reforestation activity that is far smaller than their deforestation , indicating net losses overall.
-
+      <!-- Equal height for viz + description -->
+      <div class="pure-g equal-row">
+        <div class="pure-u-1-2">
+          <div class="box">
+            <div id="vis1" class="vis-container"></div>
+            <div id="year-controls"></div>
           </div>
+        </div>
+
+        <div class="pure-u-1-2">
+          <div class="box">
+            <div class="description description-right">
+              <h3>Forest Composition</h3>
+              <p>
+                About <strong>31% (~4 Gha)</strong> of the globe was covered by forest.
+                <strong>8.5%</strong> of that forest was classified as primary forest.<br><br>
+                From 2010 to 2020, global forest area <strong>declined by ~0.4%</strong>,
+                indicating a slow but persistent net loss over the decade.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Overview map -->
+    <section>
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <div class="box header-box">
+            <h2><span class="deco-block"></span> Overview of Tree Cover Loss</h2>
+            <div class="section-description"></div>
+          </div>
+        </div>
+
+        <div class="pure-u-1">
+          <div class="box">
+            <div id="vis2" class="vis-container"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Primary Forest — Loss vs Remaining -->
+    <section>
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <div class="box header-box">
+            <h2><span class="deco-block"></span> How is Our Primary Forest Changing from 2010–2020?</h2>
+            <div class="section-description"></div>
+          </div>
+        </div>
       </div>
 
-      <div class="pure-u-3-5">
-        <div id="vis8" class="vis-container"></div>
+      <div class="pure-g equal-row">
+        <div class="pure-u-2-5">
+          <div class="box">
+            <div class="description description-left">
+              <h3>Annual Loss vs Remaining</h3>
+              <p>
+                Annual loss fluctuates around 3–4 Mha, peaking in 2016 (~6.1 Mha) and remaining elevated in 2017 (~5.0 Mha),
+                then easing in 2018–2019 (~3.6–3.7 Mha).<br><br>
+                The remaining share declines from ~100% (2010) to ~96.3% (2020),
+                indicating a drop of ~3.7 percentage points over the decade.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pure-u-3-5">
+          <div class="box">
+            <div id="vis3" class="vis-container"></div>
+          </div>
+        </div>
       </div>
 
+    </section>
+
+    <!-- SECTION: Top-10 loss vs reforestation -->
+    <section>
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <div class="box header-box">
+            <h2><span class="deco-block"></span> Loss or Gain?</h2>
+            <div class="section-description"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pure-g equal-row">
+        <div class="pure-u-3-5">
+          <div class="box">
+            <div id="vis5" class="vis-container"></div>
+          </div>
+        </div>
+
+        <div class="pure-u-2-5">
+          <div class="box">
+            <div class="description description-right">
+              <h3>Deforestation vs Reforestation</h3>
+              <p>
+                Top ten countries by gross forest loss are led by Russia and Brazil, with Canada and the United States following.
+                Most countries show reforestation activity far smaller than their deforestation, indicating net losses overall.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Drivers concat (wide) -->
+    <!-- SECTION: Drivers (two separate boxes, shared controls) -->
+    <section>
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <div class="box header-box">
+            <h2><span class="deco-block"></span> What are the Drivers of Deforestation?</h2>
+            <div class="section-description"></div>
+          </div>
+        </div>
+
+        <div class="pure-u-1">
+          <div class="box">
+            <div id="vis9" class="vis-container"></div>
+            <div id="concat-year-controls"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pure-g equal-row">
+        <div class="pure-u-1-2">
+          <div class="box">
+            <div class="description description-left">
+              <h3>Annual Loss vs Remaining</h3>
+              <p>
+                Annual loss fluctuates around 3–4 Mha, peaking in 2016 (~6.1 Mha) and remaining elevated in 2017 (~5.0 Mha),
+                then easing in 2018–2019 (~3.6–3.7 Mha).<br><br>
+                The remaining share declines from ~100% (2010) to ~96.3% (2020),
+                indicating a drop of ~3.7 percentage points over the decade.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pure-u-1-2">
+          <div class="box">
+            <div class="description description-left">
+              <h3>Annual Loss vs Remaining</h3>
+              <p>
+                Annual loss fluctuates around 3–4 Mha, peaking in 2016 (~6.1 Mha) and remaining elevated in 2017 (~5.0 Mha),
+                then easing in 2018–2019 (~3.6–3.7 Mha).<br><br>
+                The remaining share declines from ~100% (2010) to ~96.3% (2020),
+                indicating a drop of ~3.7 percentage points over the decade.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Country carbon chart -->
+    <section>
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <div class="box header-box">
+            <h2><span class="deco-block"></span> Impact of Deforestation</h2>
+            <div class="section-description"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pure-g equal-row">
+        <div class="pure-u-2-5">
+          <div class="box">
+            <div class="description description-left">
+              <h3>Carbon Emission</h3>
+              <p>
+                Some countries combine high loss intensity and high carbon impact.
+                Explore emissions relative to forest base to identify high-impact hotspots.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pure-u-3-5">
+          <div class="box">
+            <div id="vis8" class="vis-container"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="box">
+      <footer>
+        <p class="small-font">
+          Visualisation by Sze-Ning Chin. Data sources: Global Forest Watch.
+        </p>
+      </footer>
     </div>
-
-
-   </div>
-
-
   </div>
 
-    <footer>
-    <p class="small">
-      Visualisation by Sze-Ning Chin. Data sources: Global Forest Watch.
-    </p>
-  </footer>
-  
-
-  <!-- Vega embeds -->
+  <!-- Vega embeds (only those with containers) -->
   <script>
-    vegaEmbed('#vis1', "js/donut_global_tree_cover.vg.json", { actions: false }).catch(console.error);
-    vegaEmbed('#vis2', "js/pct_forest_loss_choropleth_map.vg.json", { actions: false }).catch(console.error);
-    vegaEmbed('#vis3', "js/line_chart_primary_tree_loss.vg.json", { actions: false }).catch(console.error);
-    vegaEmbed('#vis4', "js/stacked_area_driver.vg.json", { actions: false }).catch(console.error);
-    vegaEmbed('#vis5', "js/horizontal_bar_deforestation_reforestation.vg.json", { actions: false }).catch(console.error);
-    vegaEmbed('#vis6', "js/radial_chart_agriculture.vg.json", { actions: false }).catch(console.error);
-    vegaEmbed('#vis7', "js/bar_chart_country_drivers.vg.json", { actions: false }).catch(console.error);
-    vegaEmbed('#vis8', "js/country_carbon.vg.json", { actions: false }).catch(console.error);
-    vegaEmbed('#vis9', "js/concat_drivers.vg.json", { actions: false }).catch(console.error);
+    const opts = { actions: false };
+    vegaEmbed('#vis1', 'js/donut_global_tree_cover.vg.json', opts).catch(console.error);
+    vegaEmbed('#vis2', 'js/pct_forest_loss_choropleth_map.vg.json', opts).catch(console.error);
+    vegaEmbed('#vis3', 'js/line_chart_primary_tree_loss.vg.json', opts).catch(console.error);
+    vegaEmbed('#vis5', 'js/horizontal_bar_deforestation_reforestation.vg.json', opts).catch(console.error);
+    vegaEmbed('#vis8', 'js/country_carbon.vg.json', opts).catch(console.error);
+    vegaEmbed('#vis9', 'js/concat_drivers.vg.json', opts).catch(console.error);
 
+
+    
   </script>
 </body>
 </html>

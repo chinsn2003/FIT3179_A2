@@ -1,0 +1,72 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Tree Cover Loss vs Carbon Emission (filter by continent & year)",
+  "width": 800,
+  "height": 420,
+
+  "params": [
+    {
+      "name": "YearSel",
+      "value": 2010,
+      "bind": { "input": "range", "min": 2010, "max": 2020, "step": 1, "name": "Year: " }
+    },
+    {
+      "name": "ContinentSel",
+      "value": null,
+      "bind": {
+        "input": "select",
+        "options": [null, "Africa", "Americas", "Asia", "Europe", "Oceania"],
+        "labels": ["All", "Africa", "Americas", "Asia", "Europe", "Oceania"],
+        "name": "Continent: "
+      }
+    }
+  ],
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/combined.csv"
+  },
+
+  "transform": [
+    { "calculate": "toNumber(datum['Year'])", "as": "yearNum" },
+    { "filter": "datum.yearNum == YearSel" },
+
+    { "calculate": "isValid(datum['Tree cover loss driven by all causes']) && datum['Tree cover loss driven by all causes'] != '' ? toNumber(datum['Tree cover loss driven by all causes']) : null", "as": "loss_ha" },
+    { "calculate": "isValid(datum['Carbon emission']) && datum['Carbon emission'] != '' ? toNumber(datum['Carbon emission']) : null", "as": "emissions" },
+
+    { "filter": "isFinite(datum.loss_ha) && isFinite(datum.emissions)" },
+
+    { "filter": "ContinentSel == null || datum.Continent == ContinentSel" }
+  ],
+
+  "mark": { "type": "point", "filled": true, "opacity": 0.9, "size": 70 },
+
+  "encoding": {
+    "x": {
+      "field": "loss_ha",
+      "type": "quantitative",
+      "title": "Tree cover loss (ha)",
+      "axis": { "format": ",.0f" },
+      "scale": { "nice": true, "zero": true }
+    },
+    "y": {
+      "field": "emissions",
+      "type": "quantitative",
+      "title": "Carbon emission",
+      "axis": { "format": ",.0f" },
+      "scale": { "nice": true, "zero": true }
+    },
+    "color": { "field": "Continent", "type": "nominal", "title": "Continent" },
+    "tooltip": [
+      { "field": "Country Name", "type": "nominal", "title": "Country" },
+      { "field": "Continent", "type": "nominal", "title": "Continent" },
+      { "field": "yearNum", "type": "quantitative", "title": "Year" },
+      { "field": "loss_ha", "type": "quantitative", "title": "Tree cover loss (ha)", "format": ",.0f" },
+      { "field": "emissions", "type": "quantitative", "title": "Carbon emission", "format": ",.0f" }
+    ]
+  },
+
+  "config": {
+    "axis": { "labelFontSize": 12, "titleFontSize": 12 },
+    "legend": { "labelFontSize": 12, "titleFontSize": 12 }
+  }
+}

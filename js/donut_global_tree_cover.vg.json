@@ -8,7 +8,7 @@
     "format": {"type": "csv"}
   },
   "width": "container",
-  "height": 150,
+  "height": 280,
   "params": [
     {
       "name": "yr",
@@ -51,7 +51,7 @@
           "legend": null,
           "scale": {
             "domain": ["Primary Forest", "Planted Forest", "Other Tree Cover", "Non-Forest"],
-            "range": ["#2ca02c", "#1f77b4", "#f39c12", "#d5d9df"]
+            "range": ["#2c7bb6", "#abd9e9", "#fdae61", "#d7191c"]
           }
         },
         "tooltip": [
