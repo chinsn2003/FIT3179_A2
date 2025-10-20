@@ -21,7 +21,7 @@
   "layer": [
     {
       "transform": [{"calculate": "'Primary forest loss (Mha)'", "as": "series"}],
-      "mark": {"type": "line", "point": true, "strokeWidth": 3},
+      "mark": {"type": "line", "point": true},
       "encoding": {
         "x": {"field": "year", "type": "ordinal", "title": "Year"},
         "y": {"field": "sumLoss", "type": "quantitative", "title": "Primary forest loss (million ha)", "axis": {"format": ",.0f"}},
@@ -37,7 +37,7 @@
             },
 
           "scale": {"domain": ["Primary forest loss (Mha)", "Remaining (% of 2010)"],
-                    "range": ["#22c55e", "#2f6b2f"]}
+                    "range": ["#b2182b", "#2166ac"]}
         },
         "tooltip": [
           {"field": "year", "type": "ordinal", "title": "Year"},
@@ -63,7 +63,7 @@
               "padding": 6
             },
           "scale": {"domain": ["Primary forest loss (Mha)", "Remaining (% of 2010)"],
-                    "range": ["#22c55e", "#2f6b2f"]}
+                    "range": ["#22c55e", "#b2182b"]}
         },
         "tooltip": [
           {"field": "year", "type": "ordinal", "title": "Year"},
@@ -71,7 +71,28 @@
           {"field": "sumLoss", "type": "quantitative", "title": "Primary forest loss (Mha)", "format": ",.2f"}
         ]
       }
-    }
+    },
+    {
+          "data": {
+            "values": [
+              { "x": 160, "y": 30, "label": "Highest Loss of Primary Tree \n (6.13M Ha) in 2016" },
+              { "x": 420, "y":25, "label": "96.3% (of 2010) of Primary\nTree Remaining in 2020" }
+            ]
+          },
+          "mark": {
+            "type": "text",
+            "aria": false,
+            "align": "left",
+            "fontSize": 12,
+            "fontWeight": "lighter",
+            "fontStyle": "italic",
+            "color": "black",
+            "lineBreak": "\n"
+          },
+          "encoding": {
+            "x": { "field": "x", "type": "quantitative", "scale": null },
+            "y": { "field": "y", "type": "quantitative", "scale": null },
+            "text": { "field": "label" }}}
   ],
   "resolve": {"scale": {"y": "independent"}}
 }

@@ -12,10 +12,12 @@
     }
   ],
 
-  "layer": [{
+  "layer": [
+    {
       "data": { "sphere": true },
       "mark": { "type": "geoshape", "fill": "#eef6fb", "stroke": null }
-    },{
+    },
+    {
       "data": {
         "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
         "format": { "type": "topojson", "feature": "oceans" }
@@ -72,32 +74,63 @@
       "encoding": {
         "shape": {"field": "geo", "type": "geojson"},
         "color": {
-        "field": "pct_loss_forest",
-        "type": "quantitative",
-        "legend": {
-          "title": "Loss per forest area (%)",
-          "format": ".1f",
-          "titleLineHeight": 12,
-          "titlePadding": 4,
-          "direction": "horizontal",
-          "orient": "bottom", 
-          "labelAlign": "center","titleAnchor": "middle","columns": 4},
-
-        "scale": {
-          "type": "threshold",
-          "domain": [0.5, 1.5, 3, 6],
-          "range": ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"]
-        }
-      },
+          "field": "pct_loss_forest",
+          "type": "quantitative",
+          "legend": {
+            "title": "Loss per forest area (%)",
+            "format": ".1f",
+            "titleLineHeight": 12,
+            "titlePadding": 4,
+            "direction": "horizontal",
+            "orient": "bottom",
+            "labelAlign": "center",
+            "titleAnchor": "middle",
+            "columns": 4
+          },
+          "scale": {
+            "type": "threshold",
+            "domain": [0.5, 1.5, 3, 6],
+            "range": ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"]
+          }
+        },
         "tooltip": [
           {"field": "Country Name", "type": "nominal", "title": "Country"},
           {"field": "yearNum", "type": "quantitative", "title": "Year"},
           {"field": "loss_ha", "type": "quantitative", "title": "Loss (ha)", "format": ",.0f"},
-          {"field": "forest_ha", "type": "quantitative", "title": "Land area (ha)", "format": ",.0f"},
+          {"field": "forest_ha", "type": "quantitative", "title": "Forest area (ha)", "format": ",.0f"},
           {"field": "pct_loss_forest", "type": "quantitative", "title": "Loss / forest (%)", "format": ".3f"}
         ]
       }
     },
+
+    {
+      "data": {"url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/combined.csv"},
+      "transform": [
+        { "calculate": "toNumber(datum['Year'])", "as": "yearNum" },
+        { "filter": "datum.yearNum == YearSel" },
+
+        { "calculate": "toNumber(datum['Forest Area'])", "as": "forest_ha" },
+        { "calculate": "toNumber(datum['Tree cover loss driven by all causes'])", "as": "loss_ha" },
+        { "calculate": "datum.forest_ha > 0 ? 100 * datum.loss_ha / datum.forest_ha : null", "as": "pct_loss_forest" },
+
+        { "filter": "isValid(datum.pct_loss_forest)" },
+
+        { "window": [{"op": "rank", "as": "rk"}], "sort": [{"field": "pct_loss_forest", "order": "descending"}]},
+        { "filter": "datum.rk <= 3" }
+      ],
+      "layer": [
+        {
+          "mark": {"type": "text", "dy": -8, "fontSize": 11 },
+          "encoding": {
+            "longitude": {"field": "Longitude", "type": "quantitative"},
+            "latitude": {"field": "Latitude", "type": "quantitative"},
+            "text": {"field": "Country Name"},
+            "color": {"value": "#111"}
+          }
+        }
+      ]
+    },
+
     {
       "data": {
         "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",

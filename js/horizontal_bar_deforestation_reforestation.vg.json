@@ -61,7 +61,7 @@
           },
           "scale": { "zero": true }
         },
-        "color": { "value": "#f0e442" },
+        "color": { "value": "#D55E00" },
         "opacity": { "condition": {"test": "SortSel != 'Net'", "value": 1}, "value": 0 },
         "tooltip": [
           { "field": "Country", "title": "Country" },
@@ -75,7 +75,7 @@
       "mark": { "type": "bar" },
       "encoding": {
         "x": { "field": "gain", "type": "quantitative", "axis": null, "scale": { "zero": true } },
-        "color": { "value": "#0072b2" },
+        "color": { "value": "#0072B2" },
         "opacity": { "condition": {"test": "SortSel != 'Net'", "value": 1}, "value": 0 },
         "tooltip": [
           { "field": "Country", "title": "Country" },
