@@ -71,11 +71,12 @@
     {
       "data": {
         "values": [
-          { "x": 300, "y": 30, "label": "Highest Loss\n(6.13 Mha) in 2016" },
-          { "x": 520, "y": 25, "label": "96.3% of 2010\nremaining in 2020" }
+          { "x": 220, "y": 30, "label": "Highest Loss\n(6.13 Mha) in 2016" },
+          { "x": 460, "y": 25, "label": "96.3% of 2010\nremaining in 2020" },
+          { "x": 100, "y": 170, "label": "Loss fluctuates between\n~2Mha to ~3.6Mha" }
         ]
       },
-      "mark": {"type": "text", "align": "right",
+      "mark": {"type": "text", "align": "left",
                "fontSize": 12, "color": "black","lineBreak": "\n"},
       "encoding": {
         "x": {"field": "x", "type": "quantitative", "scale": null},

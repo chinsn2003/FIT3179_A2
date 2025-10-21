@@ -15,7 +15,7 @@
   ],
 
   "hconcat": [{
-      "title": {"text": "Loss caused by different drivers over time"},
+      "title": {"text": "Global Deforestation Drivers Over Time (Mha)"},
       "width": 500,
       "height": 450,
       "data": {
@@ -97,7 +97,7 @@
         "x": {
           "field": "loss_sum",
           "type": "quantitative",
-          "axis": {"title": "Tree-cover loss (M ha)"}
+          "axis": {"title": "Tree-cover loss (Mha)"}
         },
         "color": {"value": "#2b7bba"},
         "opacity":{
@@ -108,7 +108,7 @@
         },
         "tooltip": [
           {"field": "country", "title": "Country"},
-          {"field": "loss_sum", "title": "Loss (ha)", "format": ",.4f"}
+          {"field": "loss_sum", "title": "Loss (Mha)", "format": ",.4f"}
         ]
       }    
     }

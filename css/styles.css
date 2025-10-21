@@ -14,7 +14,7 @@ body {
 
 /* Headings */
 h1 {
-  font-size: 45px;
+  font-size: 50px;
   font-weight: 900;
   text-align: center;
   font-family: Georgia, "Times New Roman", Times, serif;
@@ -37,7 +37,8 @@ h3 {
 .subtitle {
   text-align: center;
   font-size: 18px;
-  color: #0f172a;
+  color: rgb(48, 48, 48);
+  margin-top: 4px;
 }
 
 /* Page container */
@@ -85,7 +86,7 @@ h3 {
 
 /* Descriptions */
 .description {
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.6;
 }
 
@@ -145,4 +146,5 @@ ul{
 
 p{
   margin-top: 0;
+  margin-bottom: 0;
 }

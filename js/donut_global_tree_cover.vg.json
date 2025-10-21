@@ -89,7 +89,7 @@
       "encoding": {"text": {"value": "Forest Composition"}}
     },
     {
-      "mark": {"type": "text", "align": "center", "baseline": "top", "dy": 6, "fontSize": 13, "fill": "#555"},
+      "mark": {"type": "text", "align": "center", "baseline": "top", "dy": 6, "fontSize": 15},
       "encoding": {"text": {"aggregate": "max", "field": "yearLabel"}}
     }
   ]
