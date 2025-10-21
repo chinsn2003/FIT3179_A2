@@ -89,8 +89,8 @@ h3 {
   line-height: 1.6;
 }
 
-.description-right { padding: 20px; }
-.description-left  { padding: 20px; }
+.description-right { padding: 13px; }
+.description-left  { padding: 13px; }
 
 .small-font { font-size: 14px; }
 
@@ -141,4 +141,8 @@ section{
 
 ul{
   margin:0;
+}
+
+p{
+  margin-top: 0;
 }

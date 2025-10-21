@@ -18,14 +18,14 @@
 
   "data": {
     "url": "https://raw.githubusercontent.com/chinsn2003/FIT3179_A2/refs/heads/main/data/treecover_loss_gain_by_country_ha.csv",
-    "format": {"type":"csv"}
+    "format": {"type": "csv"}
   },
 
   "transform": [
     { "calculate": "toNumber(datum['Sum of Tree Cover Loss 2010-2020'])",  "as": "loss_raw" },
     { "calculate": "toNumber(datum['Sum of Tree Cover Gain 2010-2020'])",  "as": "gain_raw" },
-    { "calculate": "isFinite(datum.loss_raw) ? datum.loss_raw : 0",         "as": "loss" },
-    { "calculate": "isFinite(datum.gain_raw) ? datum.gain_raw : 0",         "as": "gain" },
+    { "calculate": "isFinite(datum.loss_raw) ? datum.loss_raw/1e6 : 0",         "as": "loss" },
+    { "calculate": "isFinite(datum.gain_raw) ? datum.gain_raw/1e6  : 0",         "as": "gain" },
 
     { "calculate": "-datum.loss", "as": "negLoss" },
     { "calculate": "datum.gain - datum.loss", "as": "net" },
@@ -35,8 +35,13 @@
     { "window": [{ "op": "rank", "as": "rankGain" }], "sort": [{ "field": "gain", "order": "descending" }] },
     { "window": [{ "op": "rank", "as": "rankNet"  }], "sort": [{ "field": "netAbs", "order": "descending" }] },
 
-    { "calculate": "SortSel == 'Deforestation' ? datum.loss : (SortSel == 'Reforestation' ? datum.gain : datum.netAbs)", "as": "sortKey" },
-    { "filter": "SortSel == 'Deforestation' ? datum.rankLoss <= 20 : (SortSel == 'Reforestation' ? datum.rankGain <= 20 : datum.rankNet <= 20)" }
+    {
+      "calculate": "SortSel == 'Deforestation' ? datum.loss : (SortSel == 'Reforestation' ? datum.gain : datum.netAbs)",
+      "as": "sortKey"
+    },
+    {
+      "filter": "SortSel == 'Deforestation' ? datum.rankLoss <= 20 : (SortSel == 'Reforestation' ? datum.rankGain <= 20 : datum.rankNet <= 20)"
+    }
   ],
 
   "encoding": {
@@ -55,12 +60,14 @@
         "x": {
           "field": "negLoss",
           "type": "quantitative",
+          "scale": { "zero": true },
           "axis": {
-            "title": "Tree Cover Change (ha)",
-            "format": ",.0f"
-          }        },
+            "format": ",.0f",
+            "labelExpr": "datum.value == 0 ? '0' : format(abs(datum.value), ',.0f')"
+          }
+        },
         "color": { "value": "#D55E00" },
-        "opacity": { "condition": {"test": "SortSel != 'Net'", "value": 1}, "value": 0 },
+        "opacity": { "condition": { "test": "SortSel != 'Net'", "value": 1 }, "value": 0 },
         "tooltip": [
           { "field": "Country", "title": "Country" },
           { "field": "loss", "title": "Loss (ha)", "format": ",.0f" },
@@ -69,37 +76,58 @@
         ]
       }
     },
+
     {
       "mark": { "type": "bar" },
       "encoding": {
-        "x": { "field": "gain", "type": "quantitative", "axis": null, "scale": { "zero": true } },
+        "x": {
+          "field": "gain",
+          "type": "quantitative",
+          "scale": { "zero": true },
+          "axis": {
+            "format": ",.0f",
+            "labelExpr": "datum.value == 0 ? '0' : format(abs(datum.value), ',.0f')"
+          }
+        },
         "color": { "value": "#0072B2" },
-        "opacity": { "condition": {"test": "SortSel != 'Net'", "value": 1}, "value": 0 },
+        "opacity": { "condition": { "test": "SortSel != 'Net'", "value": 1 }, "value": 0 },
         "tooltip": [
           { "field": "Country", "title": "Country" },
           { "field": "loss", "title": "Loss (ha)", "format": ",.0f" },
           { "field": "gain", "title": "Gain (ha)", "format": ",.0f" },
           { "field": "net",  "title": "Net (ha)",  "format": ",.0f" }
-        ]      }
+        ]
+      }
     },
+
     {
       "mark": { "type": "bar" },
       "encoding": {
-        "x": { "field": "net", "type": "quantitative", "axis": null, "scale": { "zero": true } },
+        "x": {
+          "field": "net",
+          "type": "quantitative",
+          "scale": { "zero": true },
+          "axis": {
+            "title": "Tree cover (M ha): Loss ⟵ 0 ⟶ Gain",
+            "format": ",.0f",
+            "labelExpr": "datum.value == 0 ? '0' : format(abs(datum.value), ',.0f')"
+          }
+        },
         "color": {
           "condition": [
-            { "test": "datum.net < 0", "value": "#d62728" },   
-            { "test": "datum.net > 0", "value": "#2ca02c" }    
+            { "test": "datum.net < 0", "value": "#D55E00" },  
+            { "test": "datum.net > 0", "value": "#0072B2" }   
           ],
-          "value": "#c7cbd1"
+          "value": "#C7CBD1"                                 
         },
-        "opacity": { "condition": {"test": "SortSel == 'Net'", "value": 1}, "value": 0 },
+        "opacity": { "condition": { "test": "SortSel == 'Net'", "value": 1 }, "value": 0 },
         "tooltip": [
           { "field": "Country", "title": "Country" },
-          { "field": "net",  "title": "Net (ha)",  "format": ",.0f" },
-          { "field": "loss", "title": "Loss (ha)", "format": ",.0f" },
-          { "field": "gain", "title": "Gain (ha)", "format": ",.0f" }
+          { "field": "net",  "title": "Net (M ha)",  "format": ",.2f" },
+          { "field": "loss", "title": "Loss (M ha)", "format": ",.2f" },
+          { "field": "gain", "title": "Gain (M ha)", "format": ",.2f" }
         ]
       }
     }
-  ]}
+  ]
+}

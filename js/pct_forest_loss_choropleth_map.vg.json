@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text":"Annual Tree Cover Loss per Forest Area (%)", "fontSize": 25},
+  "title": {"text":"Global Tree Cover Loss per Forest Area (%)", "fontSize": 25},
   "width": "container",
   "height": 450,
   "projection": {"type": "equalEarth"},
@@ -115,7 +115,7 @@
       ],
       "layer": [
         {
-          "mark": {"type": "text", "dy": -8, "fontSize": 11 },
+          "mark": {"type": "text", "dy": -12, "fontSize": 11 },
           "encoding": {
             "longitude": {"field": "Longitude", "type": "quantitative"},
             "latitude": {"field": "Latitude", "type": "quantitative"},
