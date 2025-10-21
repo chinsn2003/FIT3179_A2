@@ -166,7 +166,7 @@ p{
 }
 
 .red-text{
-  color:darkred;
+  color:red;
 }
 
 .driver-brown-text{
@@ -200,4 +200,8 @@ p{
   box-shadow: 0 8px 20px rgba(7, 37, 46, .06);
   overflow: hidden; 
   opacity: 70%;
+}
+
+footer{
+  color:white;
 }
