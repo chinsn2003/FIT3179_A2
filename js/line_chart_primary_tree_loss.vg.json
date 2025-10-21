@@ -75,17 +75,13 @@
           { "x": 520, "y": 25, "label": "96.3% of 2010\nremaining in 2020" }
         ]
       },
-      "mark": {"type": "text", "aria": false, "align": "right",
-               "fontSize": 12, "fontStyle": "italic", "color": "black","lineBreak": "\n"},
+      "mark": {"type": "text", "align": "right",
+               "fontSize": 12, "color": "black","lineBreak": "\n"},
       "encoding": {
         "x": {"field": "x", "type": "quantitative", "scale": null},
         "y": {"field": "y", "type": "quantitative", "scale": null},
         "text": {"field": "label"}
       }
     }
-  ],
-
-  "config": {
-    "axis": { "labelFontSize": 12, "titleFontSize": 12 }
-  }
+  ]
 }

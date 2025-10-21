@@ -78,15 +78,10 @@
           "type": "quantitative",
           "legend": {
             "title": "Loss per forest area (%)",
-            "format": ".1f",
-            "titleLineHeight": 12,
-            "titlePadding": 4,
+            "format": ".0f",
             "direction": "horizontal",
             "orient": "bottom",
-            "labelAlign": "center",
-            "titleAnchor": "middle",
-            "columns": 4
-          },
+            "titleAnchor": "middle"          },
           "scale": {
             "type": "threshold",
             "domain": [0.5, 1.5, 3, 6],
