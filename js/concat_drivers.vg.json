@@ -108,7 +108,7 @@
         },
         "tooltip": [
           {"field": "country", "title": "Country"},
-          {"field": "loss_sum", "title": "Loss (ha)", "format": ",.3f"}
+          {"field": "loss_sum", "title": "Loss (ha)", "format": ",.4f"}
         ]
       }    
     }

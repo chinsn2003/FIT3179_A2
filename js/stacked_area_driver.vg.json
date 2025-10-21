@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {"text": "Loss caused by different drivers over time"},
-  "width": 600,
+  "width": "container",
   "height": 450,
 
   "params": [

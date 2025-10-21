@@ -136,3 +136,9 @@ section{
   margin-top: 40px;
   margin-bottom: 40px;
 }
+
+.section-description { font-style: italic; color: gray; margin-left: 20px;}
+
+ul{
+  margin:0;
+}
