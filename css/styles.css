@@ -148,3 +148,48 @@ p{
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.blue-text{
+  color: #2c7bb6;
+}
+
+.dark-blue-text{
+  color:#04435a;
+}
+
+.light-orange-text{
+  color:#fdae61;
+}
+
+.orange-brown-text{
+  color:#D55E00;
+}
+
+.red-text{
+  color:darkred;
+}
+
+.driver-brown-text{
+  color:#E69F00;
+}
+
+.driver-light-blue-text{
+  color:#4a9ece;
+}
+
+.driver-green-text{
+  color:#009E73;
+}
+.driver-yellow-text{
+  color:#ede02d;
+}
+.driver-blue-text{
+  color:#0072B2;
+}
+.driver-orange-text{
+  color:#D55E00;
+}
+
+.driver-purple-text{
+  color:#CC79A7;
+}

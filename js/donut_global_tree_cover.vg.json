@@ -51,7 +51,7 @@
           "legend": null,
           "scale": {
             "domain": ["Primary Forest", "Planted Forest", "Other Tree Cover", "Non-Forest"],
-            "range": ["#2c7bb6", "#abd9e9", "#fdae61", "#d7191c"]
+            "range": ["#2c7bb6", "#04435a", "#fdae61", "#d7191c"]
           }
         },
         "tooltip": [

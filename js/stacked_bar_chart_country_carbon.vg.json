@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Per-country CO₂ from deforestation embodied in trade (2013) by Continent",
+  "title": "CO₂ from deforestation embodied in trade 2010–2020",
   "width": "container",
   "height": 460,
 
@@ -12,7 +12,7 @@
   "params": [
     {
       "name": "pCont_stack",
-      "value": "Asia",
+      "value": "All",
       "bind": {
         "input": "select",
         "name": "Continent: ",
@@ -89,7 +89,7 @@
       "type": "nominal",
       "title": "Country",
       "sort": "-color",                      
-      "scale": {"scheme": "tableau20"}      
+      "scale": {"scheme": "tableau20"},"legend":{"orient": "top-left"}    
     },
     "order": {
       "field": "orderKey",
