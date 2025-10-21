@@ -82,7 +82,9 @@
         {"aggregate": [{"op": "sum", "field": "loss", "as": "loss_sum"}], "groupby": ["country"]},
         {"calculate": "abs(datum.loss_sum)", "as": "absLoss"},
         {"window": [{"op": "rank", "as": "rk"}], "sort": [{"field": "absLoss", "order": "descending"}]},
-        {"filter": "datum.rk <= 10"}
+        {"filter": "datum.rk <= 10"},
+        {"calculate": "datum.rk <=2", "as": "top2"},
+        {"calculate": "datum.loss_sum/1e6" ,"as":"loss_sum"}
       ],
       "mark": {"type": "bar"},
       "encoding": {
@@ -95,12 +97,18 @@
         "x": {
           "field": "loss_sum",
           "type": "quantitative",
-          "axis": {"title": "Tree-cover loss (ha)", "format": ",.0f"}
+          "axis": {"title": "Tree-cover loss (M ha)"}
         },
         "color": {"value": "#2b7bba"},
+        "opacity":{
+          "condition": {
+            "test": "datum.top2",
+          "value":1          },
+          "value":0.6
+        },
         "tooltip": [
           {"field": "country", "title": "Country"},
-          {"field": "loss_sum", "title": "Loss (ha)", "format": ",.0f"}
+          {"field": "loss_sum", "title": "Loss (ha)", "format": ",.3f"}
         ]
       }    
     }
