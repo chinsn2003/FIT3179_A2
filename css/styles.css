@@ -193,3 +193,11 @@ p{
 .driver-purple-text{
   color:#CC79A7;
 }
+
+.footer-box {
+  padding-left: 16px;
+  margin: -10px;
+  box-shadow: 0 8px 20px rgba(7, 37, 46, .06);
+  overflow: hidden; 
+  opacity: 70%;
+}
