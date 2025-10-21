@@ -8,8 +8,8 @@
       "bind": {
         "input": "select",
         "name": "Driver: ",
-        "options": [null, "Permanent agriculture", "Logging", "Shifting cultivation", "Settlements & Infrastructure", "Wildfire","Hard commodities","Other Natural Disturbances"],
-        "labels": ["All drivers", "Permanent agriculture", "Logging", "Shifting cultivation", "Settlements & Infrastructure", "Wildfire","Hard commodities","Other Natural Disturbances"]
+        "options": [null, "Permanent agriculture", "Logging", "Shifting cultivation", "Settlements & Infrastructure", "Wildfire","Hard commodities","Other natural disturbances"],
+        "labels": ["All drivers", "Permanent agriculture", "Logging", "Shifting cultivation", "Settlements & Infrastructure", "Wildfire","Hard commodities","Other natural disturbances"]
       }
     },
     {

@@ -42,28 +42,22 @@
 
     {"filter": "pCont_stack == 'All' || datum.continent == pCont_stack"},
 
-    {
-      "aggregate": [{"op": "sum", "field": "emissions_Mt", "as": "emissions_sum_Mt"}],
-      "groupby": ["continent","country","yearN"]
-    },
+    {"aggregate": [{"op": "sum", "field": "emissions_Mt", "as": "emissions_sum_Mt"}],
+     "groupby": ["continent","country","yearN"]},
 
-    {
-      "window": [{"op": "rank", "as": "rankInYear"}],
-      "sort": [{"field": "emissions_sum_Mt", "order": "descending"}],
-      "groupby": ["yearN"]
-    },
+    {"window": [{"op": "rank", "as": "rankInYear"}],
+     "sort": [{"field": "emissions_sum_Mt", "order": "descending"}],
+     "groupby": ["yearN"]},
 
     {"calculate": "datum.rankInYear <= 5 ? datum.country : 'Other'", "as": "groupCountry"},
 
     {"calculate": "datum.groupCountry === 'Other' ? 1e12 : -datum.emissions_sum_Mt", "as": "orderKey"},
 
-    {
-      "aggregate": [
+    {"aggregate": [
         {"op": "sum", "field": "emissions_sum_Mt", "as": "emissions_sum_Mt"},
         {"op": "min", "field": "orderKey", "as": "orderKey"}
       ],
-      "groupby": ["yearN","groupCountry"]
-    }
+     "groupby": ["yearN","groupCountry"]}
   ],
 
   "layer": [
@@ -78,11 +72,21 @@
           "axis": {"title": "Gross carbon emissions (MtCO₂e)", "format": ",.0f"}
         },
         "color": {
+          "condition": {
+            "test": "datum.groupCountry === 'Other'",
+            "value": "#B0B0B0"
+          },
           "field": "groupCountry",
           "type": "nominal",
           "title": "Country",
           "sort": "-color",
-          "scale": {"scheme": "tableau20"},
+          "scale": {
+            "range": [
+      "#0072B2","#E69F00","#009E73","#CC79A7","#56B4E9",
+      "#D55E00","#F0E442","#332288","#88CCEE","#44AA99",
+      "#117733","#999933","#882255","#AA4499"
+    ]
+          },
           "legend": {"orient": "top-left"}
         },
         "order": {"field": "orderKey", "type": "quantitative", "sort": "ascending"},
